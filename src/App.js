@@ -9,6 +9,9 @@ import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import Calendar from './pages/Calendar';
 import Avatar from './pages/Avatar';
+import AvatarStatus from './pages/AvatarStatus';
+import OrderSummary from './pages/OrderSummary';
+
 
 const App = () => {
   return (
@@ -20,6 +23,8 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/avatar" element={<Avatar />} />
+            <Route path="/avatar_status" element={<AvatarStatus/>} />
+            <Route path="/order_summary" element={<OrderSummary/>} />
         </Routes>
     </Box>
   )
