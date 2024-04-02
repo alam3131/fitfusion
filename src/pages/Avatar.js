@@ -10,8 +10,7 @@ import Thanos from '../assets/images/thanos_avatar.png';
 import Antman from '../assets/images/antman.png';
 
 
-const Avatar = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState(Deadpool);
+const Avatar = ({ selectedAvatar, setSelectedAvatar }) => {
   // Add your avatar images here
   const avatars = [
     { name: 'Deadpool', src: Deadpool, xp: 500 },
