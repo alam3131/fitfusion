@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Card, CardContent, Typography, Button, Grid } from '@mui/material';
+import React, { useState, useEffect} from 'react';
+import { Box, Card, CardContent, Typography, Button, Grid, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Deadpool from '../assets/images/deadpool_avatar.png';
 import Harley from '../assets/images/harley_quinn.png';
@@ -11,6 +11,7 @@ import Antman from '../assets/images/antman.png';
 
 
 const Avatar = () => {
+  const [selectedAvatar, setSelectedAvatar] = useState(Deadpool);
   // Add your avatar images here
   const avatars = [
     { name: 'Deadpool', src: Deadpool, xp: 500 },
@@ -22,18 +23,41 @@ const Avatar = () => {
     { name: 'Antman', src: Antman, xp: 1000},
   ];
 
+    // Function to handle avatar click
+  const handleAvatarClick = (avatarSrc) => {
+    setSelectedAvatar(avatarSrc);
+  };
+
+  useEffect(() => {
+    // Load selectedAvatar from localStorage on component mount
+    const savedAvatar = localStorage.getItem('selectedAvatar');
+    if (savedAvatar) {
+      setSelectedAvatar(savedAvatar);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save selectedAvatar to localStorage on change
+    if (selectedAvatar) {
+      localStorage.setItem('selectedAvatar', selectedAvatar);
+    }
+  }, [selectedAvatar]);
+
+
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h5" sx={{ mb: 2 }}>Change Avatar:</Typography>
       <Box sx={{ mb: 2 }}>
-        <img src={Deadpool} alt="avatar" style={{ width: '200px', height: '190px', margin: '0 20px', marginLeft: '600px', border: '2px solid black'}}/>
+        <img src={selectedAvatar} alt="avatar" style={{ width: '200px', height: '190px', margin: '0 20px', marginLeft: '600px', border: '2px solid black'}}/>
       </Box>
       <Typography variant="h6">Your Inventory:</Typography>
       <Grid container spacing={2}>
         {avatars.map((avatar) => (
           <Grid item key={avatar.name}>
             {/* Replace with your avatar image component */}
-            <img src={avatar.src} alt={avatar.name} />
+            <img src={avatar.src} alt={avatar.name}
+            onClick = {() => handleAvatarClick(avatar.src)}
+            style = {{ cursor: 'pointer' }} />
           </Grid>
         ))}
       </Grid>
