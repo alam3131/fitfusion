@@ -4,7 +4,7 @@ import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 const SearchExcercises = () => {
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
-    <Box position="relative" ml="300px" mb="-28px">
+    <Box position="relative" ml="0px" mb="-20px">
       <TextField
         height="70px"
         sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '500px', xs: '175px' }, backgroundColor: '#fff', borderRadius: '40px' }}

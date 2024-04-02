@@ -18,9 +18,6 @@ const StyledHeaderCell = styled(StyledTableCell)(({ theme }) => ({
 }));
 
 const WeeklyPointsGrid = ({ pointsData }) => {
-  // Assuming pointsData is an array containing points earned for each day of the week
-  // Example: pointsData = [100, 150, 80, 200, 120, 90, 160];
-
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   return (

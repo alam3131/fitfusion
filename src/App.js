@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
@@ -18,9 +18,11 @@ const App = () => {
     document.title = "Fitfusion"; // Set the new title
   }, []);
 
+  const [activeTab, setActiveTab] = useState('Home');
+
   return (
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
-        <Navbar />
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
