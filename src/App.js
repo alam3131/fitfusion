@@ -20,7 +20,23 @@ const App = () => {
   }, []);
 
   const [activeTab, setActiveTab] = useState('Home');
-  const [selectedAvatar, setSelectedAvatar] = useState(Deadpool);
+  const [selectedAvatar, setSelectedAvatar] = useState();
+
+  useEffect(() => {
+    // Load selectedAvatar from localStorage on component mount
+    const savedAvatar = localStorage.getItem('selectedAvatar');
+    if (savedAvatar) {
+      setSelectedAvatar(savedAvatar);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save selectedAvatar to localStorage on change
+    if (selectedAvatar) {
+      localStorage.setItem('selectedAvatar', selectedAvatar);
+    }
+  }, [selectedAvatar]);
+
 
   return (
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
