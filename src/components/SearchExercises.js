@@ -12,7 +12,7 @@ const SearchExcercises = () => {
         placeholder="Search Exercises"
         type="text"
       />
-      <Button className="search-btn" sx={{ bgcolor: '#128731', color: '#fff', textTransform: 'none', width: { lg: '173px', xs: '80px' }, height: '56px', position: 'absolute', right: '0px', fontSize: { lg: '20px', xs: '14px' } }} >
+      <Button className="search-btn" sx={{ bgcolor: '#128731', '&:hover': {bgcolor: '#128731'}, color: '#fff', textTransform: 'none', width: { lg: '173px', xs: '80px' }, height: '56px', position: 'absolute', right: '0px', fontSize: { lg: '20px', xs: '14px' } }} >
         Search
       </Button>
     </Box>

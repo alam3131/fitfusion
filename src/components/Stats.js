@@ -15,7 +15,7 @@ const Stats = () => {
   ];
 
   return (
-    <Box className="home-container" sx={{ flexGrow: 1 }}>
+    <Box className="home-container" mt={5} sx={{ flexGrow: 1 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
       </Box>
       <Grid container spacing={2}>

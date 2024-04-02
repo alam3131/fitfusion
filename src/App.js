@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
@@ -14,6 +14,10 @@ import OrderSummary from './pages/OrderSummary';
 
 
 const App = () => {
+  useEffect(() => {
+    document.title = "Fitfusion"; // Set the new title
+  }, []);
+
   return (
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar />
