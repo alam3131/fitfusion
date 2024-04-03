@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import './App.css';
-import Deadpool from './assets/images/deadpool_avatar.png';
 import ExerciseDetail from './pages/ExerciseDetail';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
@@ -12,6 +11,7 @@ import Calendar from './pages/Calendar';
 import Avatar from './pages/Avatar';
 import AvatarStatus from './pages/AvatarStatus';
 import OrderSummary from './pages/OrderSummary';
+import Search from './pages/Search';
 
 
 const App = () => {
@@ -21,6 +21,7 @@ const App = () => {
 
   const [activeTab, setActiveTab] = useState('Home');
   const [selectedAvatar, setSelectedAvatar] = useState();
+  const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
     // Load selectedAvatar from localStorage on component mount
@@ -44,11 +45,12 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
+            <Route path="/search" element={<Search/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} />} />
-            <Route path="/avatar_status" element={<AvatarStatus/>} />
-            <Route path="/order_summary" element={<OrderSummary/>} />
+            <Route path="/avatar_status" element={<AvatarStatus selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>} />
+            <Route path="/order_summary" element={<OrderSummary selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>} />
         </Routes>
     </Box>
   )

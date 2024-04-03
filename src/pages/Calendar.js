@@ -6,13 +6,7 @@ import moment from 'moment';
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
-  const [events ,setEvents] = useState([
-    {
-      title: 'My event',
-      start: new Date(),
-      end: new Date(),
-    },
-  ]);
+  const [events ,setEvents] = useState([]);
 
   const handleAddEvent = (newEvent) => {
     setEvents([...events, newEvent]);

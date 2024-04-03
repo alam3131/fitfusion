@@ -12,7 +12,7 @@ const Navbar = ({ activeTab, setActiveTab, selectedAvatar }) => {
   };
 
   return (
-    <Stack direction="row" justifyContent="space-around" sx={{ gap: {sm: '122px', xs: '40px'}, justifyContent: 'none'}}>
+    <Stack direction="row" justifyContent="space-around" marginTop= {5} sx={{ gap: {sm: '122px', xs: '40px'}, justifyContent: 'none'}}>
       <Stack
         direction="row"
         gap="40px"
@@ -22,7 +22,6 @@ const Navbar = ({ activeTab, setActiveTab, selectedAvatar }) => {
         <Link to="/" onClick={() => handleTabClick('Home')}>
                 <img src={Logo} alt="logo" style={{ width: '60px', height: '52px', margin: '0 20px'}}/>
         </Link>
-        <SearchExercises />
         <Link 
           to="/" 
           style={
@@ -47,8 +46,16 @@ const Navbar = ({ activeTab, setActiveTab, selectedAvatar }) => {
           onMouseEnter={(e) => { e.target.style.borderBottom = '3px solid #FF2625'; }}
           onMouseLeave={(e) => { if (activeTab !== 'Calendar') e.target.style.borderBottom = 'none'; }} 
           onClick={() => handleTabClick('Calendar')}>Calendar</Link>
+        <Link 
+          to="/search" 
+          style={
+            {textDecoration: 'none', color: "#128731", marginBottom: '10px', borderBottom: activeTab === 'Search' ? '3px solid #FF2625' : 'none'}
+          } 
+          onMouseEnter={(e) => { e.target.style.borderBottom = '3px solid #FF2625'; }}
+          onMouseLeave={(e) => { if (activeTab !== 'Search') e.target.style.borderBottom = 'none'; }} 
+          onClick={() => handleTabClick('Search')}>Search</Link>
         <Link to="/avatar" onClick={() => handleTabClick('Avatar')}>
-            <img src={selectedAvatar} alt="avatar" style={{ width: '60px', height: '52px', margin: '0 20px', marginLeft: '150px', marginBottom: '-6px', border: '2px solid black'}}/>
+            <img src={selectedAvatar} alt="avatar" style={{ width: '60px', height: '52px', margin: '0 20px', marginLeft: '615px', marginBottom: '-6px', border: '2px solid black'}}/>
         </Link>
       </Stack>
     </Stack>
