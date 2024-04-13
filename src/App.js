@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
+import moment from 'moment';
 
 import './App.css';
 import ExerciseDetail from './pages/ExerciseDetail';
@@ -35,6 +36,32 @@ const App = () => {
     document.title = "Fitfusion"; // Set the new title
   }, []);
 
+  // Function to initialize the points object with default values for each day of the week
+  const initializePointsObject = () => {
+    return {
+      Sunday: 0,
+      Monday: 0,
+      Tuesday: 0,
+      Wednesday: 0,
+      Thursday: 0,
+      Friday: 0,
+      Saturday: 0
+    };
+  };
+
+  // Initialize the points object
+  const [pointsThisWeek, setPointsThisWeek] = useState(() => {
+    const storedPointsThisWeek = localStorage.getItem('pointsThisWeek');
+    const currentDayOfWeek = moment().format('dddd');
+
+    // Check if it's Sunday, then reset pointsThisWeek
+    if (currentDayOfWeek === 'Sunday') {
+      return initializePointsObject();
+    } else {
+      // Load pointsThisWeek from localStorage
+      return storedPointsThisWeek ? JSON.parse(storedPointsThisWeek) : initializePointsObject();
+    }
+  });
 
   const [activeTab, setActiveTab] = useState('Home'); // Sets the tab of which is currently active from navbar
   const [selectedAvatar, setSelectedAvatar] = useState(); // The avatar for profile 
@@ -44,6 +71,14 @@ const App = () => {
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
   const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
 
+  // Function to update points earned on a specific day of the week
+  const updatePointsForDay = (dayOfWeek, pointsEarned) => {
+    setPointsThisWeek(prevPoints => ({
+      ...prevPoints,
+      [dayOfWeek]: prevPoints[dayOfWeek] + pointsEarned
+    }));
+  };
+  
 
   // Hooks to store selected avatar in local storage
   useEffect(() => {
@@ -111,6 +146,11 @@ const App = () => {
     localStorage.setItem('points', Number(points)); // Update local storage whenever points change
   }, [points]);
 
+  // Store pointsThisWeek in local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('pointsThisWeek', JSON.stringify(pointsThisWeek));
+  }, [pointsThisWeek]);
+
   // Function to update points
   const updatePoints = (newPoints) => {
     setPoints(Number(newPoints));
@@ -121,6 +161,8 @@ const App = () => {
   const earnPoints = (earnedPoints) => {
     const newPoints = points + Number(earnedPoints); // Example: User earns 10 points
     updatePoints(newPoints); // Update points using updatePoints function
+    const dayOfWeek = moment().format('dddd');
+    updatePointsForDay(dayOfWeek, earnedPoints); // Update points for the current day
   };
 
   // Function to handle losing points
@@ -133,7 +175,7 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home />}/>
+            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />

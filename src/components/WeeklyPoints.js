@@ -18,7 +18,8 @@ const StyledHeaderCell = styled(StyledTableCell)(({ theme }) => ({
 }));
 
 const WeeklyPointsGrid = ({ pointsData }) => {
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  // Define the days of the week in the order you want to display them
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   return (
     <StyledTableContainer component={Paper}>
@@ -26,6 +27,7 @@ const WeeklyPointsGrid = ({ pointsData }) => {
         <TableHead>
           <TableRow>
             <StyledHeaderCell align="center" style={{ borderRight: '2px solid rgba(0, 0, 0, 0.7)' }}><Typography variant="h6">Day</Typography></StyledHeaderCell>
+            {/* Render the days of the week */}
             {daysOfWeek.map((day) => (
               <StyledHeaderCell key={day} align="center"><Typography variant="h6">{day}</Typography></StyledHeaderCell>
             ))}
@@ -34,8 +36,9 @@ const WeeklyPointsGrid = ({ pointsData }) => {
         <TableBody>
           <TableRow>
             <StyledTableCell align="center" style={{ borderRight: '2px solid rgba(0, 0, 0, 0.7)' }}><Typography variant="body1">Points</Typography></StyledTableCell>
-            {pointsData.map((points, index) => (
-              <StyledTableCell key={index} align="center"><Typography variant="body1">{points} Points</Typography></StyledTableCell>
+            {/* Render the points earned for each day of the week */}
+            {daysOfWeek.map((day) => (
+              <StyledTableCell key={day} align="center"><Typography variant="body1">{pointsData[day]} Points</Typography></StyledTableCell>
             ))}
           </TableRow>
         </TableBody>
