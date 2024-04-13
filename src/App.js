@@ -35,12 +35,15 @@ const App = () => {
     document.title = "Fitfusion"; // Set the new title
   }, []);
 
+
   const [activeTab, setActiveTab] = useState('Home'); // Sets the tab of which is currently active from navbar
   const [selectedAvatar, setSelectedAvatar] = useState(); // The avatar for profile 
   const [selectedImages, setSelectedImages] = useState([]); // The array of images that are selected in shop
   const [points, setPoints] = useState(0); // State variable to save the points the user has
   const [inventory, setInventory] = useState([]); // The array of avatars in your inventory
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
+  const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
+
 
   // Hooks to store selected avatar in local storage
   useEffect(() => {
@@ -132,9 +135,9 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
-            <Route path="/search" element={<Search earnPoints={earnPoints} points={points}/>} />
+            <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} points={points} inventory={inventory}/>} />
             <Route path="/avatar_status" element={<AvatarStatus selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} shopItems={shopItems}/>} />
             <Route path="/order_summary" element={<OrderSummary selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} losePoints={losePoints} shopItems={shopItems} setShopItems={setShopItems} inventory={inventory} setInventory={setInventory}/>} />

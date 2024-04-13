@@ -24,7 +24,7 @@ const getPointsForLevel = (level) => {
   }
 };
 
-const SearchExcercises = ({ earnPoints, points }) => {
+const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsToCalender }) => {
   const [search, setSearch] = useState('');
   const [excercises,setExcercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
@@ -56,6 +56,17 @@ const SearchExcercises = ({ earnPoints, points }) => {
 
   const handleExcerciseClick = (exercise) => {
     earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
+  };
+  
+  const handleAddToWorkoutPlan = (exercise) => {
+    console.log(`Adding "${exercise.WorkOut}" to workout plan`);
+    // add new workout to calender 
+    const formattedEvent = {
+      title: exercise.WorkOut,
+      start: new Date(), // You can set the start date and time here
+      end: new Date(), // You can set the end date and time here
+    };
+    setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
   };
   
   return (
@@ -117,11 +128,9 @@ const SearchExcercises = ({ earnPoints, points }) => {
               <Typography variant="h6">{exercise.WorkOut}</Typography>
               <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
+              <Button  className="search-btn" sx={{ bgcolor: '#128731', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
             </Box>
           </Button>
-
-
-
         ))}
       </Stack>
     </Stack>
