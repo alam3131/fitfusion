@@ -23,10 +23,10 @@ const Stats = () => {
           <Grid item xs={12} sm={4} key={stat.key}>
             <Card variant="outlined" sx={{ textAlign: 'center', p: 2, backgroundColor: stat.color }}>
               <CardContent>
-                <Typography color="textSecondary" gutterBottom>
+                <Typography color="white" gutterBottom>
                   {stat.label}
                 </Typography>
-                <Typography variant="h5" component="div">
+                <Typography color="white" variant="h5" component="div">
                   {stat.value}
                 </Typography>
               </CardContent>

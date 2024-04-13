@@ -24,7 +24,7 @@ const getPointsForLevel = (level) => {
   }
 };
 
-const SearchExcercises = ({setWorkoutsToCalender,workoutsToCalender}) => {
+const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsToCalender }) => {
   const [search, setSearch] = useState('');
   const [excercises,setExcercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
@@ -54,6 +54,10 @@ const SearchExcercises = ({setWorkoutsToCalender,workoutsToCalender}) => {
     }
   }
 
+  const handleExcerciseClick = (exercise) => {
+    earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
+  };
+  
   const handleAddToWorkoutPlan = (exercise) => {
     console.log(`Adding "${exercise.WorkOut}" to workout plan`);
     // add new workout to calender 
@@ -101,12 +105,32 @@ const SearchExcercises = ({setWorkoutsToCalender,workoutsToCalender}) => {
       </Stack>
       <Stack spacing={2}>
         {excercises.map((exercise, index) => (
-          <Box key={index} bgcolor="#f0f0f0" p={2} borderRadius={4}>
-            <Typography variant="h6">{exercise.WorkOut}</Typography>
-            <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
-            <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-            <Button  className="search-btn" sx={{ bgcolor: '#128731', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
-          </Box>
+          <Button 
+            key={index} 
+            onClick={() => handleExcerciseClick(exercise)} 
+            variant="contained" 
+            sx={{ 
+              bgcolor: '#1976d2', // Blue background color
+              color: '#fff', // White text color
+              borderRadius: 4, 
+              textAlign: 'center',
+              mt: 25,
+              mx: 'auto',
+              display: 'block',
+              width: '300px',
+              textTransform: 'none',
+              '&:hover': {
+                bgcolor: '#1565c0', // Darker blue on hover
+              }
+            }}
+          >
+            <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
+              <Typography variant="h6">{exercise.WorkOut}</Typography>
+              <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
+              <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
+              <Button  className="search-btn" sx={{ bgcolor: '#128731', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
+            </Box>
+          </Button>
         ))}
       </Stack>
     </Stack>
