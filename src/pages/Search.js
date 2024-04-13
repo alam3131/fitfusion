@@ -110,7 +110,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
             onClick={() => handleExcerciseClick(exercise)} 
             variant="contained" 
             sx={{ 
-              bgcolor: '#1976d2', // Blue background color
+              bgcolor: '#128731',
               color: '#fff', // White text color
               borderRadius: 4, 
               textAlign: 'center',
@@ -120,7 +120,12 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
               width: '300px',
               textTransform: 'none',
               '&:hover': {
-                bgcolor: '#1565c0', // Darker blue on hover
+                bgcolor: 'transparent', // Transparent background color on hover
+                borderColor: 'red', // Red border color on hover
+                '& > .MuiBox-root': {
+                  color: 'red', // Change text color of the box to red on hover
+                  borderColor: 'red', // Change border color of the box to red on hover
+                }
               }
             }}
           >
@@ -128,7 +133,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
               <Typography variant="h6">{exercise.WorkOut}</Typography>
               <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-              <Button  className="search-btn" sx={{ bgcolor: '#128731', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
+              <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
             </Box>
           </Button>
         ))}

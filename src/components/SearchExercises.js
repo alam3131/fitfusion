@@ -16,6 +16,12 @@ const SearchExcercises = () => {
         Search
       </Button>
     </Box>
+    {/* sx={{ bgcolor: '#128731', '&:hover': {bgcolor: '#128731'} */}
+    {/* .search-btn:hover {
+    color: #FF2625 !important;
+    border: 1px solid #FF2625 !important;
+    background-color:#fff; */}
+  }
 
   </Stack>
 );
