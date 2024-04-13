@@ -10,38 +10,11 @@ import Thanos from '../assets/images/thanos_avatar.png';
 import Antman from '../assets/images/antman.png';
 
 
-const Avatar = ({ selectedAvatar, setSelectedAvatar }) => {
-  // Add your avatar images here
-  const avatars = [
-    { name: 'Deadpool', src: Deadpool, xp: 500 },
-    { name: 'Harley Quinn', src: Harley, xp: 1000 },
-    { name: 'Joker', src: Joker, xp: 1000},
-    { name: 'Batgirl', src: Batgirl, xp: 500 },
-    { name: 'Venom', src: Venom, xp: 1000 },
-    { name: 'Thanos', src: Thanos, xp: 1000},
-    { name: 'Antman', src: Antman, xp: 1000},
-  ];
-
-    // Function to handle avatar click
+const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
+  // Function to handle avatar click
   const handleAvatarClick = (avatarSrc) => {
     setSelectedAvatar(avatarSrc);
   };
-
-  useEffect(() => {
-    // Load selectedAvatar from localStorage on component mount
-    const savedAvatar = localStorage.getItem('selectedAvatar');
-    if (savedAvatar) {
-      setSelectedAvatar(savedAvatar);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Save selectedAvatar to localStorage on change
-    if (selectedAvatar) {
-      localStorage.setItem('selectedAvatar', selectedAvatar);
-    }
-  }, [selectedAvatar]);
-
 
   return (
     <Box sx={{ p: 2 }}>
@@ -51,7 +24,7 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar }) => {
       </Box>
       <Typography variant="h6">Your Inventory:</Typography>
       <Grid container spacing={2}>
-        {avatars.map((avatar) => (
+        {inventory.map((avatar) => (
           <Grid item key={avatar.name}>
             {/* Replace with your avatar image component */}
             <img src={avatar.src} alt={avatar.name}
@@ -60,8 +33,8 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar }) => {
           </Grid>
         ))}
       </Grid>
-      <Typography variant="subtitle1" sx={{ mt: 2 }}>Total xp: 3000</Typography>
-      <Button component={Link} to="/avatar_status" variant="contained" color="primary" sx={{ mt: 2, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
+      <Typography variant="subtitle1" sx={{ mt: 2 }}>Total xp: {points}</Typography>
+      <Button component={Link} to="/avatar_status" variant="contained" color="primary" sx={{ mt: 7, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
         Buy More!
       </Button>
     </Box>
