@@ -171,6 +171,42 @@ const App = () => {
     updatePoints(newPoints); // Update points using updatePoints function
   };
 
+  useEffect(() => {
+    // Load workoutsToCalender from localStorage on component mount
+    const savedWorkouts = localStorage.getItem('workoutsToCalender');
+    if (savedWorkouts) {
+      setWorkoutsToCalender(JSON.parse(savedWorkouts));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save workoutsToCalender to localStorage on change
+    localStorage.setItem('workoutsToCalender', JSON.stringify(workoutsToCalender));
+  }, [workoutsToCalender]);
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+    alert('Local storage cleared successfully!');
+  };
+
+  // Event listener for the space bar
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 32) { // Check if the pressed key is the space bar (key code 32)
+        clearLocalStorage();
+      }
+    };
+
+    // Add event listener when component mounts
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Remove event listener when component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+
   return (
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
