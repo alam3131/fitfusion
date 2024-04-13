@@ -22,6 +22,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [selectedAvatar, setSelectedAvatar] = useState();
   const [selectedImages, setSelectedImages] = useState([]);
+  const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
 
   useEffect(() => {
     // Load selectedAvatar from localStorage on component mount
@@ -45,9 +46,9 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
-            <Route path="/search" element={<Search/>} />
+            <Route path="/search" element={<Search setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} />} />
             <Route path="/avatar_status" element={<AvatarStatus selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>} />
             <Route path="/order_summary" element={<OrderSummary selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>} />
