@@ -100,39 +100,39 @@ const App = () => {
   useEffect(() => {
     const storedPoints = localStorage.getItem('points'); // Retrieve points from local storage
     if (storedPoints !== null) {
-      setPoints(storedPoints);
+      setPoints(Number(storedPoints));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('points', points); // Update local storage whenever points change
+    localStorage.setItem('points', Number(points)); // Update local storage whenever points change
   }, [points]);
 
   // Function to update points
   const updatePoints = (newPoints) => {
-    setPoints(newPoints);
+    setPoints(Number(newPoints));
+    // setPoints(0)
   };
 
   // Function to handle earning points
   const earnPoints = (earnedPoints) => {
-    const newPoints = points + earnedPoints; // Example: User earns 10 points
+    const newPoints = points + Number(earnedPoints); // Example: User earns 10 points
     updatePoints(newPoints); // Update points using updatePoints function
   };
 
   // Function to handle losing points
   const losePoints = (lostPoints) => {
-    const newPoints = points - lostPoints; // Example: User loses 5 points
+    const newPoints = points - Number(lostPoints); // Example: User loses 5 points
     updatePoints(newPoints); // Update points using updatePoints function
   };
 
-
   return (
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
-        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar}/>
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
-            <Route path="/search" element={<Search/>} />
+            <Route path="/search" element={<Search earnPoints={earnPoints} points={points}/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} points={points} inventory={inventory}/>} />

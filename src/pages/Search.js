@@ -24,7 +24,7 @@ const getPointsForLevel = (level) => {
   }
 };
 
-const SearchExcercises = () => {
+const SearchExcercises = ({ earnPoints, points }) => {
   const [search, setSearch] = useState('');
   const [excercises,setExcercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
@@ -53,6 +53,10 @@ const SearchExcercises = () => {
       setExcercises(searchedExercises);
     }
   }
+
+  const handleExcerciseClick = (exercise) => {
+    earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
+  };
   
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" spacing={4}>
@@ -90,11 +94,34 @@ const SearchExcercises = () => {
       </Stack>
       <Stack spacing={2}>
         {excercises.map((exercise, index) => (
-          <Box key={index} bgcolor="#f0f0f0" p={2} borderRadius={4}>
-            <Typography variant="h6">{exercise.WorkOut}</Typography>
-            <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
-            <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-          </Box>
+          <Button 
+            key={index} 
+            onClick={() => handleExcerciseClick(exercise)} 
+            variant="contained" 
+            sx={{ 
+              bgcolor: '#1976d2', // Blue background color
+              color: '#fff', // White text color
+              borderRadius: 4, 
+              textAlign: 'center',
+              mt: 25,
+              mx: 'auto',
+              display: 'block',
+              width: '300px',
+              textTransform: 'none',
+              '&:hover': {
+                bgcolor: '#1565c0', // Darker blue on hover
+              }
+            }}
+          >
+            <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
+              <Typography variant="h6">{exercise.WorkOut}</Typography>
+              <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
+              <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
+            </Box>
+          </Button>
+
+
+
         ))}
       </Stack>
     </Stack>

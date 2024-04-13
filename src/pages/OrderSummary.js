@@ -4,6 +4,17 @@ import { Link } from 'react-router-dom';
 import { Stack } from '@mui/material'
 
 const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, shopItems, setShopItems, inventory, setInventory }) => {
+  // Calculates the total cost of the cart
+  const getTotalXp = () => {
+    let totalXp = 0;
+    selectedImages.forEach(image => {
+      totalXp += image.xp;
+    });
+    return totalXp;
+  };
+
+  const cartTotal = getTotalXp();
+
   // Function to handle the "Buy" button click
   const handleBuy = () => {
     // Filter out selected images from shopItems and add them to inventory
@@ -13,6 +24,8 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
     // Update state to reflect changes
     setShopItems(newShopItems);
     setInventory(newInventory);
+
+    losePoints(cartTotal);
   
     // Clear selected images
     setSelectedImages([]);
@@ -35,8 +48,8 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
           maxWidth: '600px', // Adjust the maximum width of the Stack
         }}
       >
-        <Typography variant="subtitle1" sx={{ mt: 2 }}>Cart Total: 1400 xp</Typography>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>Points After Purchase: 1600xp</Typography>
+        <Typography variant="subtitle1" sx={{ mt: 2 }}>Cart Total: {cartTotal} xp</Typography>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>Points After Purchase: {points - cartTotal} xp</Typography>
         <Stack direction="row">
           <Button 
             component={Link} 
