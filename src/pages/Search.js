@@ -30,6 +30,21 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
   const [selectedMuscle, setSelectedMuscle] = useState('');
   const [selectedLevel, setLevel] = useState('');
 
+  const handleLevelAndMuscleFilter = async () => {
+    if (selectedMuscle && selectedLevel) {
+      const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+      const filteredExercises = exercisesData.filter(
+        item => item.Muscles.toLowerCase().includes(selectedMuscle.toLowerCase()) &&
+                item.Intensity_Level.toLowerCase().includes(selectedLevel.toLowerCase())
+      );
+      setExcercises(filteredExercises);
+    } else if (selectedMuscle) {
+      handleMuscleGroupClick(selectedMuscle);
+    } else if (selectedLevel) {
+      handleLevelGroupClick(selectedLevel);
+    }
+  };
+
   const handleLevelGroupClick = async (Level) => {
     setLevel(Level); 
     const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
@@ -68,6 +83,10 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
     };
     setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
   };
+
+  useEffect(() => {
+    handleLevelAndMuscleFilter();
+  }, [selectedMuscle, selectedLevel]);
   
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" spacing={4}>
@@ -92,7 +111,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         <Select className="search-btn"
           sx={{color: '#fff', fontSize: { lg: '20px', xs: '14px' }, height: '56px'}}
           value={selectedMuscle}
-          onChange={(e) => handleMuscleGroupClick(e.target.value)}
+          onChange={(e) => setSelectedMuscle(e.target.value)}
           displayEmpty
            // Customize scrollbar width bgcolor: '#128731' sx={{ color: '#FFFFFF' }
         >
@@ -104,11 +123,11 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ width: '250px',bgcolor: '#128731', borderRadius: '4px', fontSize: { lg: '20px', xs: '14px' } }}> 
+      <FormControl sx={{ width: '250px',bgcolor: '#128731', borderRadius: '4px', fontSize: { lg: '20px', xs: '14px' }}}> 
         <Select className="search-btn"
           sx={{color: '#fff', fontSize: { lg: '20px', xs: '14px' }, height: '56px'}}
           value={selectedLevel}
-          onChange={(e) => handleLevelGroupClick(e.target.value)}
+          onChange={(e) => setLevel(e.target.value)}
           displayEmpty
            // Customize scrollbar width bgcolor: '#128731' sx={{ color: '#FFFFFF' }
         >
