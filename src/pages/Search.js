@@ -77,7 +77,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
       <Stack direction="row" spacing={2}>
         <TextField
           height="76px"
-          sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '350px', xs: '250px' }, backgroundColor: '#fff', borderRadius: '40px' }}
+          sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '550px', xs: '250px' }, backgroundColor: '#fff', borderRadius: '40px' }}
           value = {search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search Exercises"
@@ -86,7 +86,9 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         <Button className="search-btn" sx={{ bgcolor: '#128731', color: '#fff', textTransform: 'none', height: '56px', fontSize: { lg: '20px', xs: '14px' } }} onClick={handleSearch}>
           Search
         </Button>
-        <FormControl sx={{ width: '200px',bgcolor: '#128731', borderRadius: '4px', fontSize: { lg: '20px', xs: '14px' } }}> 
+      </Stack>
+      <Stack direction="row" spacing={2}>
+      <FormControl sx={{ width: '200px',bgcolor: '#128731', borderRadius: '4px', fontSize: { lg: '20px', xs: '14px' } }}> 
         <Select className="search-btn"
           sx={{color: '#fff', fontSize: { lg: '20px', xs: '14px' }, height: '56px'}}
           value={selectedMuscle}
@@ -102,6 +104,23 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         ))}
         </Select>
       </FormControl>
+      <FormControl sx={{ width: '250px',bgcolor: '#128731', borderRadius: '4px', fontSize: { lg: '20px', xs: '14px' } }}> 
+        <Select className="search-btn"
+          sx={{color: '#fff', fontSize: { lg: '20px', xs: '14px' }, height: '56px'}}
+          value={selectedLevel}
+          onChange={(e) => handleLevelGroupClick(e.target.value)}
+          displayEmpty
+           // Customize scrollbar width bgcolor: '#128731' sx={{ color: '#FFFFFF' }
+        >
+        <MenuItem value="" disabled >
+          Experience Level
+        </MenuItem>
+        {levelGroups.map((level, index) => (
+          <MenuItem key={index} value={level}>{level}</MenuItem>
+        ))}
+        </Select>
+      </FormControl>
+        
       </Stack>
       <Stack spacing={2}>
         {excercises.map((exercise, index) => (
@@ -132,6 +151,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
             <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
               <Typography variant="h6">{exercise.WorkOut}</Typography>
               <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
+              <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
               <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
             </Box>
