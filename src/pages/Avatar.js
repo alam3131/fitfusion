@@ -1,14 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { Box, Card, CardContent, Typography, Button, Grid, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Deadpool from '../assets/images/deadpool_avatar.png';
-import Harley from '../assets/images/harley_quinn.png';
-import Joker from '../assets/images/joker.png';
-import Batgirl from '../assets/images/batgirl.png';
-import Venom from '../assets/images/venom.png';
-import Thanos from '../assets/images/thanos_avatar.png';
-import Antman from '../assets/images/antman.png';
-
 
 const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
   // Function to handle avatar click
@@ -18,7 +10,7 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>Change Avatar:</Typography>
+      <Typography variant="h5" sx={{ ml: 77, mb: 2 }}>Change Avatar:</Typography>
       <Box sx={{ mb: 2 }}>
         <img src={selectedAvatar} alt="avatar" style={{ width: '200px', height: '190px', margin: '0 20px', marginLeft: '600px', border: '2px solid black'}}/>
       </Box>
@@ -26,7 +18,6 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
       <Grid container spacing={2}>
         {inventory.map((avatar) => (
           <Grid item key={avatar.name}>
-            {/* Replace with your avatar image component */}
             <img src={avatar.src} alt={avatar.name}
             onClick = {() => handleAvatarClick(avatar.src)}
             style = {{ cursor: 'pointer' }} />

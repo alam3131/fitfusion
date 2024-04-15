@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button, Grid, Card, CardMedia } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material'
 
 const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, shopItems, setShopItems, inventory, setInventory }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  let navigate = useNavigate(); 
+
   // Calculates the total cost of the cart
   const getTotalXp = () => {
     let totalXp = 0;
@@ -17,18 +20,27 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
 
   // Function to handle the "Buy" button click
   const handleBuy = () => {
-    // Filter out selected images from shopItems and add them to inventory
-    const newShopItems = shopItems.filter(item => !selectedImages.some(image => image.src === item.src));
-    const newInventory = [...inventory, ...selectedImages];
-  
-    // Update state to reflect changes
-    setShopItems(newShopItems);
-    setInventory(newInventory);
+    if (points >= cartTotal) {
+      setIsVisible(false);
+      // Filter out selected images from shopItems and add them to inventory
+      const newShopItems = shopItems.filter(item => !selectedImages.some(image => image.src === item.src));
+      const newInventory = [...inventory, ...selectedImages];
+    
+      // Update state to reflect changes
+      setShopItems(newShopItems);
+      setInventory(newInventory);
 
-    losePoints(cartTotal);
-  
-    // Clear selected images
-    setSelectedImages([]);
+      losePoints(cartTotal);
+    
+      // Clear selected images
+      setSelectedImages([]);
+
+      navigate("/avatar");
+    } else {
+      // Display a message that you don't have enough money
+      setIsVisible(true);
+    }
+
   };
 
   console.log("Selected Images in OrderSummary:", selectedImages); // Add this line to log selectedImages
@@ -49,11 +61,10 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
         }}
       >
         <Typography variant="subtitle1" sx={{ mt: 2 }}>Cart Total: {cartTotal} xp</Typography>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>Points After Purchase: {points - cartTotal} xp</Typography>
+        <Typography variant="subtitle1" sx={{ mb: 2, ml: -5}}>Points After Purchase: {points - cartTotal} xp</Typography>
+        {isVisible && <Typography variant="subtitle1" color="RED" sx={{ mb: 1, ml:-7}}>Not enough XP points for purchase</Typography>}
         <Stack direction="row">
           <Button 
-            component={Link} 
-            to="/avatar"
             variant="contained" 
             color="primary" 
             sx={{ mb: 2 }}

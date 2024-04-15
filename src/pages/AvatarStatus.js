@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material'
 import CharacterGrid from '../components/CharacterGrid';
 
 const AvatarStatus = ({ selectedImages, setSelectedImages, points, shopItems }) => {
-  console.log("Selected Images in AvatarStatus:", selectedImages); // Add this line to log selectedImages
+  const [isVisible, setIsVisible] = useState(false);
+  let navigate = useNavigate();
+
+  // Function to handle the "Buy" button click
+  const handleCheckout = () => {
+    if (selectedImages.length >= 1) {
+      setIsVisible(false);
+    
+      navigate("/order_summary");
+    } else {
+      // Display a message that you don't have enough money
+      setIsVisible(true);
+    }
+  };
+
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h3" sx={{ mb: 2, ml: 73}}>Avatar Shop</Typography>
       <Stack direction="column">
         <Typography variant="subtitle1" sx={{ mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>You have {points} points!</Typography>
         <CharacterGrid selectedImages={selectedImages} setSelectedImages={setSelectedImages} shopItems={shopItems}/>
-        {/* Implement the avatar selection and checkout here */}
-        <Button component={Link} to="/order_summary" variant="contained" color="primary" sx={{ mt: 25, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
+        {isVisible && <Typography variant="subtitle1" color="RED" sx={{ mt: 20, mb: -24, ml:70}}>Please select at least one item to checkout</Typography>}
+        <Button 
+          onClick={() => handleCheckout()} 
+          variant="contained" 
+          color="primary" 
+          sx={{ mt: 25, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
           Checkout
         </Button>
       </Stack>
