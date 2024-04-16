@@ -3,21 +3,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 const Stats = () => {
-  // These values can also come from props or state
+  // New statistics to show more user engagement and achievements
   const stats = [
-    { key: 'calories', label: 'Calories', value: '456 kcal', color: '#2CE12C'},
-    { key: 'time', label: 'Time', value: '2:05 Min', color: '#3399FF'},
-    { key: 'distance', label: 'Distance', value: '3.25 Mile', color: '#FF6666'}
+    { key: 'totalPoints', label: 'Total Points', value: '1200', color: '#FFD700' }, // Gold color for a premium feel
+    { key: 'exercisesCompleted', label: 'Exercises Completed', value: '250', color: '#0088FE' }, // Bright blue for a calm, trustworthy feel
+    { key: 'activeStreak', label: 'Active Streak', value: '14 Days', color: '#32CD32' } // Lime green for energy and growth
   ];
 
   return (
     <Box className="home-container" mt={5} sx={{ flexGrow: 1 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-      </Box>
       <Grid container spacing={2}>
         {stats.map((stat) => (
           <Grid item xs={12} sm={4} key={stat.key}>
@@ -35,11 +32,12 @@ const Stats = () => {
         ))}
       </Grid>
       <Typography variant="subtitle1" sx={{ mt: 3, textAlign: 'center' }}>
-        Points Earned Each Day
+        Keep up the great work! Every exercise counts towards your goals.
       </Typography>
     </Box>
   );
 }
 
 export default Stats;
-  
+
+
