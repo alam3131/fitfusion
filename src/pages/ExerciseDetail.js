@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom';
+import {Box} from '@mui/material'
+import {excerciseOptions,fetchData} from '../utils/fetchData';
+import ExcerciseVideo from '../components/ExcerciseVideo';
 
-const ExerciseDetail = () => {
+
+const ExcerciseDetail = () => {
   return (
-    <div>ExerciseDetail</div>
+    <Box>
+      <ExcerciseVideo/>
+    </Box>
   )
 }
 
-export default ExerciseDetail
+export default ExcerciseDetail
+ 

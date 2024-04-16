@@ -212,7 +212,7 @@ const App = () => {
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
             <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>}/>
-            <Route path="/exercise/:id" element={<ExerciseDetail />} />
+            <Route path="/search/:WorkOut" element={<ExerciseDetail />} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />

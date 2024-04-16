@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
+import { Link } from 'react-router-dom'; 
 
 const muscleGroups = [
   'Biceps', 'Triceps', 'Chest', 'Legs', 'Abs', 'Stretching', 
@@ -63,8 +64,9 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
     if (search) {
       const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
       const searchedExercises = exercisesData.filter(
-        item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search),);
+        item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search) || item.Video.toLowerCase().includes(search),);
       setSearch('');
+      console.log(exercisesData);
       setExcercises(searchedExercises);
     }
   }
@@ -141,11 +143,11 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
       </FormControl>
         
       </Stack>
-      <Stack spacing={2}>
+      <Stack spacing={2} flexWrap="wrap" justifyContent="center">
         {excercises.map((exercise, index) => (
           <Button 
             key={index} 
-            onClick={() => handleExcerciseClick(exercise)} 
+            //onClick={() => handleExcerciseClick(exercise)} 
             variant="contained" 
             sx={{ 
               bgcolor: '#128731',
@@ -172,9 +174,10 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
               <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
               <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-              <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
+              {/* <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button> */}
+              <Link to={`/search/${exercise.WorkOut}`}>View Details</Link>
             </Box>
-          </Button>
+            </Button> 
         ))}
       </Stack>
     </Stack>
