@@ -65,7 +65,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
       const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
       const searchedExercises = exercisesData.filter(
         item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search) 
-        || item.Explaination.toLowerCase().includes(search),);
+        || (item['Long Explanation'].toLowerCase().includes(search)),);
       setSearch('');
       console.log(exercisesData);
       setExcercises(searchedExercises);
