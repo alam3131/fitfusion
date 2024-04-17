@@ -69,7 +69,7 @@ const App = () => {
   const [points, setPoints] = useState(0); // State variable to save the points the user has
   const [inventory, setInventory] = useState([]); // The array of avatars in your inventory
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
-  const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
+  const [workoutsToCalender, setWorkoutsToCalender] = useState([]);
 
   // Function to update points earned on a specific day of the week
   const updatePointsForDay = (dayOfWeek, pointsEarned) => {
@@ -78,7 +78,6 @@ const App = () => {
       [dayOfWeek]: prevPoints[dayOfWeek] + pointsEarned
     }));
   };
-  
 
   // Hooks to store selected avatar in local storage
   useEffect(() => {
