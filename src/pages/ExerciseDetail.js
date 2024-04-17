@@ -6,12 +6,22 @@ import ExcerciseVideo from '../components/ExcerciseVideo';
 import {Typography, Stack, Button} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
-const ExcerciseDetail = () => {
+const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
   const [exerciseDetail, setExcerciseDetail] =useState({});
   const [exerciseVideo, setExcerciseVideo] =useState([]);
   const{WorkOut} = useParams();
   const location = useLocation();
   const exercise = location.state;
+  const handleAddToWorkoutPlan = (exercise) => {
+    console.log(`Adding "${exercise.WorkOut}" to workout plan`);
+    // add new workout to calender 
+    const formattedEvent = {
+      title: exercise.WorkOut,
+      start: new Date(), // You can set the start date and time here
+      end: new Date(), // You can set the end date and time here
+    };
+    setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
+  };
   useEffect(() => {
     const fetchExcerciseData = async () => {
       //const excerciseDBUrl = 'https://work-out-api1.p.rapidapi.com/search';
@@ -56,10 +66,10 @@ const ExcerciseDetail = () => {
           </Button>
           <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '100px', height: '100px' }}>
             <div>
-            
             <p> {exercise.Intensity_Level}</p>
             </div>
           </Button>
+          <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button>
         </Stack>
       </Stack>
     </Stack>
