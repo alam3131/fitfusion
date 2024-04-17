@@ -64,7 +64,8 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
     if (search) {
       const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
       const searchedExercises = exercisesData.filter(
-        item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search) || item.Video.toLowerCase().includes(search),);
+        item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search) 
+        || item.Explaination.toLowerCase().includes(search),);
       setSearch('');
       console.log(exercisesData);
       setExcercises(searchedExercises);
@@ -172,10 +173,11 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
             <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
               <Typography variant="h6">{exercise.WorkOut}</Typography>
               <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
+              {/* <Typography variant="body1">Muscles: {exercise.Explaination}</Typography> */}
               <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
               {/* <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button> */}
-              <Link to={`/search/${exercise.WorkOut}`}>View Details</Link>
+              <Link to={`/search/${exercise.WorkOut}`} state={exercise}>View Details</Link>
             </Box>
             </Button> 
         ))}
