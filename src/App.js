@@ -13,13 +13,34 @@ import AvatarStatus from './pages/AvatarStatus';
 import OrderSummary from './pages/OrderSummary';
 import Search from './pages/Search';
 
-import Deadpool from './assets/images/deadpool_avatar.png';
-import Harley from './assets/images/harley_quinn.png';
-import Joker from './assets/images/joker.png';
-import Batgirl from './assets/images/batgirl.png';
-import Venom from './assets/images/venom.png';
-import Thanos from './assets/images/thanos_avatar.png';
-import Antman from './assets/images/antman.png';
+// Importing images
+import { 
+  Antman, 
+  TheAvatar, 
+  Batgirl, 
+  Batman, 
+  Captain, 
+  Catwoman, 
+  Deadpool, 
+  Deadpool2, 
+  Flash, 
+  Lantern, 
+  Groot, 
+  Harley, 
+  Harley2, 
+  Hawk, 
+  Joker, 
+  Lex, 
+  Magneto, 
+  Martian, 
+  Penguin, 
+  Spiderman, 
+  Spongebob, 
+  Thanos, 
+  Thanos2, 
+  Venom, 
+  Wonder 
+} from './assets/images';
 
 const avatars = [
   { name: 'Harley Quinn', src: Harley, xp: 500 },
@@ -210,7 +231,6 @@ const App = () => {
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
             <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>}/>
-            {/* <Route path="/exercise/:id" element={<ExerciseDetail />} /> */}
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />
