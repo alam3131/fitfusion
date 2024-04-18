@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import { Link } from 'react-router-dom'; 
+import Pagination from '@mui/material/Pagination';
 
 const muscleGroups = [
   'Biceps', 'Triceps', 'Chest', 'Legs', 'Abs', 'Stretching', 
@@ -30,6 +31,8 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
   const [excercises,setExcercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
   const [selectedLevel, setLevel] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [exercisesPerPage] = useState(6);
 
   const handleLevelAndMuscleFilter = async () => {
     if (selectedMuscle && selectedLevel) {
@@ -51,6 +54,16 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
     const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
     const filteredByLevel = exercisesData.filter(item => item.Intensity_Level.toLowerCase().includes(Level.toLowerCase()));
     setExcercises(filteredByLevel);
+  };
+
+  const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+  const currentExercises = excercises.slice(indexOfFirstExercise, indexOfLastExercise);
+
+  const paginate = (event, value) => {
+    setCurrentPage(value);
+
+    window.scrollTo({ top: 1800, behavior: 'smooth' });
   };
 
   const handleMuscleGroupClick = async (muscle) => {
@@ -76,20 +89,13 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
     earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
   };
   
-  const handleAddToWorkoutPlan = (exercise) => {
-    console.log(`Adding "${exercise.WorkOut}" to workout plan`);
-    // add new workout to calender 
-    const formattedEvent = {
-      title: exercise.WorkOut,
-      start: new Date(), // You can set the start date and time here
-      end: new Date(), // You can set the end date and time here
-    };
-    setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
-  };
-
   useEffect(() => {
     handleLevelAndMuscleFilter();
   }, [selectedMuscle, selectedLevel]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
   
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" spacing={4}>
@@ -145,10 +151,10 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         
       </Stack>
       <Stack spacing={2} flexWrap="wrap" justifyContent="center">
-        {excercises.map((exercise, index) => (
+        {currentExercises.map((exercise, index) => (
           <Button 
             key={index} 
-            //onClick={() => handleExcerciseClick(exercise)} 
+            onClick={() => handleExcerciseClick(exercise)} 
             variant="contained" 
             sx={{ 
               bgcolor: '#128731',
@@ -176,11 +182,25 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
               {/* <Typography variant="body1">Muscles: {exercise.Explaination}</Typography> */}
               <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
               <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-              {/* <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}} onClick={() => handleAddToWorkoutPlan(exercise)}>Add to Calendar</Button> */}
-              <Link to={`/search/${exercise.WorkOut}`} state={exercise}>View Details</Link>
+              <Link to={`/search/${exercise.WorkOut}`} state={exercise}>
+                <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}}>View Details</Button>
+              </Link>
             </Box>
             </Button> 
         ))}
+      </Stack>
+      <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">
+        {excercises.length > 9 && (
+          <Pagination
+            color="standard"
+            shape="rounded"
+            defaultPage={1}
+            count={Math.ceil(excercises.length / exercisesPerPage)}
+            page={currentPage}
+            onChange={paginate}
+            size="large"
+          />
+        )}
       </Stack>
     </Stack>
   );

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import {Box} from '@mui/material'
 import {exerciseOptions,fetchData, youtubeOptions} from '../utils/fetchData';
-import ExcerciseVideo from '../components/ExcerciseVideo';
 import {Typography, Stack, Button} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
@@ -38,7 +37,7 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
 
   if(!exerciseVideo.length) return 'Loading...';
   return (
-    <Stack gap="60px" sx={{flexDirection: {lg:'row'}, p:'20px', alignItems:'center'}}>
+    <Stack gap="60px" spacing={2} sx={{flexDirection: {lg:'row'}, p:'20px', alignItems:'center', marginTop: '40px'}}>
       {exerciseVideo?.slice(0, 1)?.map((item, index) => (
         <div>
         <iframe
@@ -51,7 +50,7 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
         ></iframe>
       </div>
       ))}
-      <Stack sx={{ gap: { lg: '35px', xs: '20px' } }}>
+      <Stack spacing={2} sx={{ gap: { lg: '35px', xs: '20px' } }}>
         <Typography sx={{ fontSize: { lg: '40px', xs: '30px' } }} fontWeight={700} textTransform="capitalize">
         <div><h2>{exercise.WorkOut}</h2></div>
         </Typography>
@@ -59,12 +58,12 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
           <div><p> {exercise['Long Explanation']} </p></div>
         </Typography>
         <Stack direction="row" gap="24px" alignItems="center">
-          <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '100px', height: '100px' }}>
+          <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '140px', height: '100px' }}>
           <div>
             <p>{exercise.Muscles}</p>
           </div>
           </Button>
-          <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '100px', height: '100px' }}>
+          <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '140px', height: '100px' }}>
             <div>
             <p> {exercise.Intensity_Level}</p>
             </div>
