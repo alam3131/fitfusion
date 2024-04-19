@@ -24,7 +24,7 @@ const AvatarStatus = ({ selectedImages, setSelectedImages, points, shopItems }) 
     <Box sx={{ p: 2 }}>
       <Typography variant="h3" sx={{ mb: 2, ml: 73}}>Avatar Shop</Typography>
       <Stack direction="column">
-        <Typography variant="subtitle1" sx={{ mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>You have {points} points!</Typography>
+        {/* <Typography variant="subtitle1" sx={{ mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>You have {points} points!</Typography> */}
         <CharacterGrid selectedImages={selectedImages} setSelectedImages={setSelectedImages} shopItems={shopItems}/>
         {isVisible && <Typography variant="subtitle1" color="RED" sx={{ mt: 20, mb: -24, ml:70}}>Please select at least one item to checkout</Typography>}
         <Button 

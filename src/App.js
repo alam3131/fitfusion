@@ -15,40 +15,57 @@ import Search from './pages/Search';
 
 // Importing images
 import { 
-  Antman, 
   TheAvatar, 
-  Batgirl, 
   Batman, 
+  Beast,
   Captain, 
   Catwoman, 
-  Deadpool, 
+  Cyclops,
   Deadpool2, 
   Flash, 
   Lantern, 
   Groot, 
-  Harley, 
   Harley2, 
+  Hawkeye,
   Hawk, 
-  Joker, 
+  Torch,
+  Joker,
   Lex, 
   Magneto, 
   Martian, 
   Penguin, 
   Spiderman, 
   Spongebob, 
-  Thanos, 
+  Storm,
   Thanos2, 
-  Venom, 
+  Venom,
   Wonder 
 } from './assets/images';
 
 const avatars = [
-  { name: 'Harley Quinn', src: Harley, xp: 500 },
-  { name: 'Joker', src: Joker, xp: 500},
-  { name: 'Batgirl', src: Batgirl, xp: 500 },
-  { name: 'Venom', src: Venom, xp: 500 },
-  { name: 'Thanos', src: Thanos, xp: 500},
-  { name: 'Antman', src: Antman, xp: 500},
+  { name: 'Avatar', src: TheAvatar, xp: 500 },
+  { name: 'Captain America', src: Captain, xp: 500},
+  { name: 'Deadpool', src: Deadpool2, xp: 500 },
+  { name: 'Martian Manhunter', src: Martian, xp: 500 },
+  { name: 'Thanos', src: Thanos2, xp: 500},
+  { name: 'Magneto', src: Magneto, xp: 500},
+  { name: 'Batman', src: Batman, xp: 1000 },
+  { name: 'Catwoman', src: Catwoman, xp: 1000 },
+  { name: 'Flash', src: Flash, xp: 1000 },
+  { name: 'Green Lantern', src: Lantern, xp: 1000 },
+  { name: 'Groot', src: Groot, xp: 1000 },
+  { name: 'Spongebob', src: Spongebob, xp: 1000 },
+  { name: 'Wonder Woman', src: Wonder, xp: 1500 },
+  { name: 'Spiderman', src: Spiderman, xp: 1500 },
+  { name: 'Harley Quinn', src: Harley2, xp: 1500 },
+  { name: 'Hawkman', src: Hawk, xp: 1500 },
+  { name: 'Penguin', src: Penguin, xp: 1500 },
+  { name: 'Venom', src: Venom, xp: 1500 },
+  { name: 'Joker', src: Joker, xp: 2000 },
+  { name: 'Beast', src: Beast, xp: 2000 },
+  { name: 'Hawkeye', src: Hawkeye, xp: 2000 },
+  { name: 'Human Torch', src: Torch, xp: 2000 },
+  { name: 'Storm', src: Storm, xp: 2000 },
 ];
 
 const App = () => {
@@ -122,10 +139,10 @@ const App = () => {
     if (storedInventory) {
       // Parse the stored string back into an array
       setInventory(JSON.parse(storedInventory));
-      // setInventory([{ name: 'Deadpool', src: Deadpool, xp: 0 }]);
+      // setInventory([{ name: 'Lex Luthor', src: Lex, xp: 0 }]);
     } else {
       // If inventory is not stored, set it to the avatars array
-      setInventory([{ name: 'Deadpool', src: Deadpool, xp: 0 }]);
+      setInventory([{ name: 'Lex Luthor', src: Lex, xp: 0 }]);
     }
   }, []);
 
@@ -141,7 +158,7 @@ const App = () => {
     if (savedShopItems) {
       // Parse the stored string back into an array
       setShopItems(JSON.parse(savedShopItems));
-      // setShopItems(avatars);
+      setShopItems(avatars);
     } else {
       // If shop items are not stored, set them to the initial array
       setShopItems(avatars);

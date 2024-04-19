@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Stack, Typography } from '@mui/material';
 
 import Logo from '../assets/images/unnamed.png';
-import Deadpool from '../assets/images/deadpool_avatar.png';
 import SearchExercises from '../components/SearchExercises';
 
 const Navbar = ({ activeTab, setActiveTab, selectedAvatar, points }) => {

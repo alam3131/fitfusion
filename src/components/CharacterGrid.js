@@ -1,11 +1,5 @@
 import React from 'react';
-import { Grid, Card, CardMedia } from '@mui/material';
-import Harley from '../assets/images/harley_quinn.png';
-import Joker from '../assets/images/joker.png';
-import Batgirl from '../assets/images/batgirl.png';
-import Venom from '../assets/images/venom.png';
-import Thanos from '../assets/images/thanos_avatar.png';
-import Antman from '../assets/images/antman.png';
+import { Grid, Card, CardMedia, Typography } from '@mui/material';
 
 const ImageGrid = ({ selectedImages, setSelectedImages, shopItems }) => {
   const handleImageClick = (src) => {
@@ -27,7 +21,7 @@ const ImageGrid = ({ selectedImages, setSelectedImages, shopItems }) => {
   return (
     <Grid container spacing={2}>
       {shopItems.map((avatar, index) => (
-        <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+        <Grid item key={index} xs={12} sm={6} md={4} lg={2}>
           <Card
             onClick={() => handleImageClick(avatar.src)}
             style={{
@@ -39,8 +33,10 @@ const ImageGrid = ({ selectedImages, setSelectedImages, shopItems }) => {
               component="img"
               image={avatar.src}
               alt={avatar.name}
-              height="300"
+              height="auto" // Set height to auto to maintain aspect ratio
+              width="100%" 
             />
+            <Typography textAlign="center">{avatar.name}</Typography>
           </Card>
         </Grid>
       ))}
