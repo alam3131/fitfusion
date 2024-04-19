@@ -107,7 +107,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
           height="76px"
           sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '550px', xs: '250px' }, backgroundColor: '#fff', borderRadius: '40px' }}
           value = {search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="Search Exercises"
           type="text"
         />
