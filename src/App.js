@@ -70,6 +70,7 @@ const App = () => {
   const [inventory, setInventory] = useState([]); // The array of avatars in your inventory
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
   const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
+  const [weeklyExercises, setWeeklyExercises] = useState([]);
 
   // Function to update points earned on a specific day of the week
   const updatePointsForDay = (dayOfWeek, pointsEarned) => {
@@ -211,11 +212,11 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>}/>
+            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises}/>}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />
+            <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender} setWeeklyExercises={setWeeklyExercises}/>} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} points={points} inventory={inventory}/>} />
             <Route path="/avatar_status" element={<AvatarStatus selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} shopItems={shopItems}/>} />
             <Route path="/order_summary" element={<OrderSummary selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} losePoints={losePoints} shopItems={shopItems} setShopItems={setShopItems} inventory={inventory} setInventory={setInventory}/>} />

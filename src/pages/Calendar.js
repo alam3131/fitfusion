@@ -13,11 +13,29 @@ const muscleGroups = [
   'Quadriceps', 'Trapezius', 'Shoulders', 'Glutes'
 ];
 
-const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender }) => {
+const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExercises }) => {
   const [currentView, setCurrentView] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [exercises, setExercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
+  
+  const isInCurrentDay = (date) => {
+    const startOfDay = moment().startOf('day');
+    const endOfDay = moment().endOf('day');
+    return moment(date).isBetween(startOfDay, endOfDay, null, '[]');
+  };
+
+  useEffect(() => {
+    // Filter exercises that fall within the current week
+    const filteredExercises = workoutsToCalender.filter(event => isInCurrentDay(event.start));
+    
+    // Calculate the total number of exercises in the current week
+    const totalExercisesInWeek = filteredExercises.length;
+    
+    // Update the state with the total exercises for the week
+    setWeeklyExercises(totalExercisesInWeek);
+  }, [workoutsToCalender]);
+  
 
   useEffect(() => {
     const storedView = localStorage.getItem('currentView');

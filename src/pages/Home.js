@@ -7,10 +7,10 @@ import SearchExercises from '../components/SearchExercises';
 import HeroBanner from '../components/HeroBanner';
 import WeeklyPointsGrid from '../components/WeeklyPoints';
 
-const Home = ({ pointsThisWeek, setPointsThisWeek }) => {
+const Home = ({ pointsThisWeek, setPointsThisWeek, points, weeklyExercises }) => {
   return (
     <Box>
-        <Stats />
+        <Stats points = {points} weeklyExercises={weeklyExercises}/>
         <WeeklyPointsGrid pointsData={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>
     </Box>
   )
