@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import moment from 'moment';
 
 import './App.css';
-import ExerciseDetail from './pages/ExerciseDetail';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
@@ -13,22 +12,70 @@ import Avatar from './pages/Avatar';
 import AvatarStatus from './pages/AvatarStatus';
 import OrderSummary from './pages/OrderSummary';
 import Search from './pages/Search';
+import ExerciseDetail from './pages/ExerciseDetail';
 
-import Deadpool from './assets/images/deadpool_avatar.png';
-import Harley from './assets/images/harley_quinn.png';
-import Joker from './assets/images/joker.png';
-import Batgirl from './assets/images/batgirl.png';
-import Venom from './assets/images/venom.png';
-import Thanos from './assets/images/thanos_avatar.png';
-import Antman from './assets/images/antman.png';
+// Importing images
+import { 
+  TheAvatar, 
+  Batman, 
+  Beast,
+  Captain, 
+  Catwoman, 
+  Cyclops,
+  Deadpool2, 
+  Flash, 
+  Lantern, 
+  Groot, 
+  Harley2, 
+  Hawkeye,
+  Hawk, 
+  Torch,
+  Joker,
+  Lex, 
+  Magneto, 
+  Martian, 
+  Penguin, 
+  Spiderman, 
+  Spongebob, 
+  Storm,
+  Thanos2, 
+  Venom,
+  Wonder 
+} from './assets/images';
 
 const avatars = [
-  { name: 'Harley Quinn', src: Harley, xp: 500 },
-  { name: 'Joker', src: Joker, xp: 500},
-  { name: 'Batgirl', src: Batgirl, xp: 500 },
-  { name: 'Venom', src: Venom, xp: 500 },
-  { name: 'Thanos', src: Thanos, xp: 500},
-  { name: 'Antman', src: Antman, xp: 500},
+  [
+    { name: 'Avatar', src: TheAvatar, xp: 500 },
+    { name: 'Captain America', src: Captain, xp: 500},
+    { name: 'Deadpool', src: Deadpool2, xp: 500 },
+    { name: 'Martian Manhunter', src: Martian, xp: 500 },
+    { name: 'Thanos', src: Thanos2, xp: 500},
+    { name: 'Magneto', src: Magneto, xp: 500}
+  ],
+  [
+    { name: 'Batman', src: Batman, xp: 1000 },
+    { name: 'Catwoman', src: Catwoman, xp: 1000 },
+    { name: 'Flash', src: Flash, xp: 1000 },
+    { name: 'Green Lantern', src: Lantern, xp: 1000 },
+    { name: 'Groot', src: Groot, xp: 1000 },
+    { name: 'Spongebob', src: Spongebob, xp: 1000 }
+  ],
+  [
+    { name: 'Wonder Woman', src: Wonder, xp: 1500 },
+    { name: 'Spiderman', src: Spiderman, xp: 1500 },
+    { name: 'Harley Quinn', src: Harley2, xp: 1500 },
+    { name: 'Hawkman', src: Hawk, xp: 1500 },
+    { name: 'Penguin', src: Penguin, xp: 1500 },
+    { name: 'Venom', src: Venom, xp: 1500 }
+  ],
+  [
+    { name: 'Joker', src: Joker, xp: 2000 },
+    { name: 'Beast', src: Beast, xp: 2000 },
+    { name: 'Hawkeye', src: Hawkeye, xp: 2000 },
+    { name: 'Human Torch', src: Torch, xp: 2000 },
+    { name: 'Storm', src: Storm, xp: 2000 },
+    { name: 'Cyclops', src: Cyclops, xp: 2000 }
+  ]
 ];
 
 const App = () => {
@@ -69,7 +116,7 @@ const App = () => {
   const [points, setPoints] = useState(0); // State variable to save the points the user has
   const [inventory, setInventory] = useState([]); // The array of avatars in your inventory
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
-  const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
+  const [workoutsToCalender, setWorkoutsToCalender] = useState([]);
 
   // Function to update points earned on a specific day of the week
   const updatePointsForDay = (dayOfWeek, pointsEarned) => {
@@ -78,7 +125,6 @@ const App = () => {
       [dayOfWeek]: prevPoints[dayOfWeek] + pointsEarned
     }));
   };
-  
 
   // Hooks to store selected avatar in local storage
   useEffect(() => {
@@ -103,10 +149,10 @@ const App = () => {
     if (storedInventory) {
       // Parse the stored string back into an array
       setInventory(JSON.parse(storedInventory));
-      // setInventory([{ name: 'Deadpool', src: Deadpool, xp: 0 }]);
+      // setInventory([{ name: 'Lex Luthor', src: Lex, xp: 0 }]);
     } else {
       // If inventory is not stored, set it to the avatars array
-      setInventory([{ name: 'Deadpool', src: Deadpool, xp: 0 }]);
+      setInventory([{ name: 'Lex Luthor', src: Lex, xp: 0 }]);
     }
   }, []);
 
