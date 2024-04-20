@@ -53,9 +53,9 @@ const Navbar = ({ activeTab, setActiveTab, selectedAvatar, points }) => {
           onMouseEnter={(e) => { e.target.style.borderBottom = '3px solid #FF2625'; }}
           onMouseLeave={(e) => { if (activeTab !== 'Search') e.target.style.borderBottom = 'none'; }} 
           onClick={() => handleTabClick('Search')}>Search</Link>
-        <Typography mb={2} ml={10} style={{ fontWeight: 'bold' }}>Total XP: {points} </Typography>  
+        <Typography mb={2} ml={10} mr={45} style={{ fontWeight: 'bold' }}>Total XP: {points} </Typography>  
         <Link to="/avatar" onClick={() => handleTabClick('Avatar')}>
-            <img src={selectedAvatar} alt="avatar" style={{ width: '60px', height: '52px', margin: '0 20px', marginLeft: '400px', marginBottom: '-6px', border: '2px solid black'}}/>
+            <img src={selectedAvatar} alt="avatar" style={{ width: '60px', height: '52px', margin: '0 20px', marginBottom: '-6px', border: '2px solid black'}}/>
         </Link>
       </Stack>
     </Stack>
