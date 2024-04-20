@@ -12,6 +12,7 @@ import Avatar from './pages/Avatar';
 import AvatarStatus from './pages/AvatarStatus';
 import OrderSummary from './pages/OrderSummary';
 import Search from './pages/Search';
+import ExerciseDetail from './pages/ExerciseDetail';
 
 // Importing images
 import { 
@@ -257,6 +258,7 @@ const App = () => {
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
             <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>}/>
+            <Route path="/search/:WorkOut" element={<ExerciseDetail setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender}/>} />
