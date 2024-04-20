@@ -132,6 +132,8 @@ const App = () => {
     const savedAvatar = localStorage.getItem('selectedAvatar');
     if (savedAvatar) {
       setSelectedAvatar(savedAvatar);
+    } else {
+      setSelectedAvatar(Lex);
     }
   }, []);
 
