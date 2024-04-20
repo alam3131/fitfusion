@@ -151,47 +151,51 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
         
       </Stack>
       <Stack spacing={2} flexWrap="wrap" justifyContent="center">
-        {currentExercises.map((exercise, index) => (
-          <Button 
-            key={index} 
-            onClick={() => handleExcerciseClick(exercise)} 
-            variant="contained" 
-            sx={{ 
-              bgcolor: '#128731',
-              color: '#fff', // White text color
-              borderRadius: 4, 
-              textAlign: 'center',
-              mt: 25,
-              mx: 'auto',
-              display: 'block',
-              width: '300px',
-              textTransform: 'none',
-              '&:hover': {
-                bgcolor: 'transparent', // Transparent background color on hover
-                borderColor: 'red', // Red border color on hover
-                '& > .MuiBox-root': {
-                  color: 'red', // Change text color of the box to red on hover
-                  borderColor: 'red', // Change border color of the box to red on hover
-                }
-              }
-            }}
-          >
-            <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
-              <Typography variant="h6">{exercise.WorkOut}</Typography>
-              <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
-              {/* <Typography variant="body1">Muscles: {exercise.Explaination}</Typography> */}
-              <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
-              <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
-              <Link to={`/search/${exercise.WorkOut}`} state={exercise}>
-                <Button  className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}}>View Details</Button>
-              </Link>
-            </Box>
-            </Button> 
-        ))}
-      </Stack>
+  {currentExercises.length > 0 ? (
+    currentExercises.map((exercise, index) => (
+      <Button 
+        key={index} 
+        onClick={() => handleExcerciseClick(exercise)} 
+        variant="contained" 
+        sx={{ 
+          bgcolor: '#128731',
+          color: '#fff', // White text color
+          borderRadius: 4, 
+          textAlign: 'center',
+          mt: 25,
+          mx: 'auto',
+          display: 'block',
+          width: '300px',
+          textTransform: 'none',
+          '&:hover': {
+            bgcolor: 'transparent', // Transparent background color on hover
+            borderColor: 'red', // Red border color on hover
+            '& > .MuiBox-root': {
+              color: 'red', // Change text color of the box to red on hover
+              borderColor: 'red', // Change border color of the box to red on hover
+            }
+          }
+        }}
+      >
+        <Box p={2} borderRadius={4} sx={{ color: '#fff' }}>
+          <Typography variant="h6">{exercise.WorkOut}</Typography>
+          <Typography variant="body1">Muscles: {exercise.Muscles}</Typography>
+          <Typography variant="body2">Level: {exercise.Intensity_Level}</Typography>
+          <Typography variant="body2">Points: {getPointsForLevel(exercise.Intensity_Level)}</Typography>
+          <Link to={`/search/${exercise.WorkOut}`} state={exercise}>
+            <Button className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff'}}>View Details</Button>
+          </Link>
+        </Box>
+      </Button>
+    ))
+  ) :  (
+    <Typography >No results found...</Typography>
+  )}
+</Stack>
+
       <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">
         {excercises.length > 9 && (
-          <Pagination
+        <Pagination
             color="standard"
             shape="rounded"
             defaultPage={1}
