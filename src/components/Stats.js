@@ -5,12 +5,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-const Stats = ({activeStreak, points, weeklyExercises}) => {
+const Stats = ({activeStreak, points, weeklyExercises, updateExercises, updatePoints}) => {
   // New statistics to show more user engagement and achievements
   const stats = [
-    { key: 'totalPoints', label: 'Total Points', value: points, color: '#FFD700' }, // Gold color for a premium feel
-    { key: 'exercisesCompleted', label: 'Exercises Completed', value: weeklyExercises, color: '#0088FE' }, // Bright blue for a calm, trustworthy feel
-    { key: 'activeStreak', label: 'Active Streak', value: '14 Days', color: '#32CD32' } // Lime green for energy and growth
+    { key: 'totalPoints', label: 'Total Points', value: updatePoints, color: '#FFD700' }, // Gold color for a premium feel
+    { key: 'exercisesCompleted', label: 'Exercises Completed', value: updateExercises, color: '#0088FE' }, // Bright blue for a calm, trustworthy feel
+    { key: 'activeStreak', label: 'Active Streak', value: activeStreak, color: '#32CD32' } // Lime green for energy and growth
   ];
 
   return (

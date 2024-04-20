@@ -71,6 +71,10 @@ const App = () => {
   const [shopItems, setShopItems] = useState([]); // The array of avatars in the shop
   const [workoutsToCalender,setWorkoutsToCalender] = useState([]);
   const [weeklyExercises, setWeeklyExercises] = useState([]);
+  const [activeStreak, setActiveStreak] = useState(0);
+  const [workOutsToday, setworkOutsToday] = useState([]);
+  const today = moment().format('dddd');  // Gets today's day name, e.g., 'Monday'
+  const todayPoints = pointsThisWeek[today];  // Access the points for today from the object
 
   // Function to update points earned on a specific day of the week
   const updatePointsForDay = (dayOfWeek, pointsEarned) => {
@@ -212,7 +216,7 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises}/>}/>
+            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints}/>}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
