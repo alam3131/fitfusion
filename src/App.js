@@ -167,7 +167,7 @@ const App = () => {
     if (savedShopItems) {
       // Parse the stored string back into an array
       setShopItems(JSON.parse(savedShopItems));
-      setShopItems(avatars);
+      // setShopItems(avatars);
     } else {
       // If shop items are not stored, set them to the initial array
       setShopItems(avatars);

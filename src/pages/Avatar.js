@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Box, Card, CardContent, Typography, Button, Grid, Stack } from '@mui/material';
+import { Box, Card, CardMedia, CardContent, Typography, Button, Grid, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
@@ -16,15 +16,28 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
       </Box>
       <Typography mt={5} textAlign={"center"} style={{ fontWeight: 'bold' }} variant="h6">Your Inventory:</Typography>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        {inventory.map((avatar) => (
+        {inventory.map((avatar, index) => (
           <Grid item key={avatar.name}>
-            <img src={avatar.src} alt={avatar.name}
-            onClick = {() => handleAvatarClick(avatar.src)}
-            style = {{ cursor: 'pointer' }} />
+            <Card 
+              sx={{ maxWidth: 150 }}
+              onClick={() => handleAvatarClick(avatar.src)}
+              style={{
+                cursor: 'pointer',
+                border: selectedAvatar === avatar.src
+                  ? '6px solid orange'
+                  : '6px solid transparent',
+            }}
+            >
+              <CardMedia
+                component="img"
+                image={avatar.src}
+                alt={`Selected Image ${index}`}
+              />
+              <Typography textAlign="center">{avatar.name}</Typography>
+            </Card>
           </Grid>
         ))}
       </Grid>
-      {/* <Typography variant="subtitle1" sx={{ mt: 2 }}>Total xp: {points}</Typography> */}
       <Button component={Link} to="/avatar_status" variant="contained" color="primary" sx={{ mt: 7, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
         Buy More!
       </Button>

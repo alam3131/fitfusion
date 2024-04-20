@@ -23,7 +23,9 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
     if (points >= cartTotal) {
       setIsVisible(false);
       // Filter out selected images from shopItems and add them to inventory
-      const newShopItems = shopItems.filter(item => !selectedImages.some(image => image.src === item.src));
+      const newShopItems = shopItems.map(row =>
+        row.filter(item => !selectedImages.some(image => image.src === item.src))
+      );
       const newInventory = [...inventory, ...selectedImages];
     
       // Update state to reflect changes
@@ -87,6 +89,7 @@ const OrderSummary = ({ selectedImages, setSelectedImages, points, losePoints, s
                 image={image.src}
                 alt={`Selected Image ${index}`}
               />
+              <Typography textAlign="center">{image.name}</Typography>
             </Card>
           </Grid>
         ))}
