@@ -1,42 +1,69 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
-
-import Exercises from '../components/Exercises';
 import Stats from '../components/Stats';
-import SearchExercises from '../components/SearchExercises';
-import HeroBanner from '../components/HeroBanner';
 import WeeklyPointsGrid from '../components/WeeklyPoints';
 
 const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyExercises, activeStreak, setActiveStreak }) => {
-  const [buttonPressed, setButtonPressed] = useState(false); // State variable to track if button is pressed
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [lastLoggedDate, setLastLoggedDate] = useState(null);
   const [updateExercises, setUpdateExercises] = useState(0);
-  const [updatePoints, setUpdatePoints] = useState(0);
+  const [updatePoints, setUpdatePoints] = useState(points);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  // Function to handle button click
+  useEffect(() => {
+    // Load buttonDisabled status from localStorage on component mount
+    const storedButtonDisabled = localStorage.getItem('buttonDisabled');
+    if (storedButtonDisabled) {
+      setButtonDisabled(JSON.parse(storedButtonDisabled));
+    }
+  }, []);
+
+  const advanceDate = () => {
+    const nextDay = new Date(currentDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    setCurrentDate(nextDay);
+  };
+
   const handleButtonClick = () => {
-    // Set buttonPressed to true when the button is clicked
-    setButtonPressed(true);
+    setButtonDisabled(true);
+    setLastLoggedDate(new Date());
+    setUpdatePoints(updatePoints + todayPoints);
+    setUpdateExercises(updateExercises + weeklyExercises);
+    setActiveStreak(activeStreak + 1);
   };
 
   useEffect(() => {
-    if(buttonPressed){
-      setUpdatePoints(updatePoints + todayPoints);
-      setUpdateExercises(updateExercises + weeklyExercises);
-      setActiveStreak(activeStreak+1);
-      setButtonPressed(false);
-    }
-  }, [buttonPressed, setActiveStreak, activeStreak, weeklyExercises]);
+    // Save buttonDisabled status to localStorage whenever it changes
+    localStorage.setItem('buttonDisabled', JSON.stringify(buttonDisabled));
+  }, [buttonDisabled]);
 
+  useEffect(() => {
+    const currentDate = new Date();
+    if (lastLoggedDate && lastLoggedDate.toDateString() !== currentDate.toDateString()) {
+      setActiveStreak(0);
+      setLastLoggedDate(currentDate);
+    }
+  }, [lastLoggedDate, setActiveStreak, todayPoints, weeklyExercises]);
+
+  useEffect(() => {
+    localStorage.setItem('updateExercises', updateExercises.toString());
+    localStorage.setItem('updatePoints', updatePoints.toString());
+  }, [updateExercises, updatePoints]);
+
+  useEffect(() => {
+    setButtonDisabled(false);
+  }, [currentDate]);
 
   return (
     <Box>
-          <Stats points = {points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} updateExercises={updateExercises} updatePoints={updatePoints}/>
-        <WeeklyPointsGrid pointsData={pointsThisWeek} setPointsThisWeek={setPointsThisWeek}/>
-        <Button variant="contained" onClick={handleButtonClick}>
-          Log Workout
-        </Button>
+      <Stats points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} updateExercises={updateExercises} updatePoints={updatePoints} />
+      <WeeklyPointsGrid pointsData={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} />
+      <Button variant="contained" onClick={handleButtonClick} disabled={buttonDisabled}>
+        Log Workout
+      </Button>
+      <Button onClick={advanceDate}>Advance Date</Button>
     </Box>
-  )
+  );
 }
 
-export default Home
+export default Home;
