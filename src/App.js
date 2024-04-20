@@ -43,29 +43,38 @@ import {
 } from './assets/images';
 
 const avatars = [
-  { name: 'Avatar', src: TheAvatar, xp: 500 },
-  { name: 'Captain America', src: Captain, xp: 500},
-  { name: 'Deadpool', src: Deadpool2, xp: 500 },
-  { name: 'Martian Manhunter', src: Martian, xp: 500 },
-  { name: 'Thanos', src: Thanos2, xp: 500},
-  { name: 'Magneto', src: Magneto, xp: 500},
-  { name: 'Batman', src: Batman, xp: 1000 },
-  { name: 'Catwoman', src: Catwoman, xp: 1000 },
-  { name: 'Flash', src: Flash, xp: 1000 },
-  { name: 'Green Lantern', src: Lantern, xp: 1000 },
-  { name: 'Groot', src: Groot, xp: 1000 },
-  { name: 'Spongebob', src: Spongebob, xp: 1000 },
-  { name: 'Wonder Woman', src: Wonder, xp: 1500 },
-  { name: 'Spiderman', src: Spiderman, xp: 1500 },
-  { name: 'Harley Quinn', src: Harley2, xp: 1500 },
-  { name: 'Hawkman', src: Hawk, xp: 1500 },
-  { name: 'Penguin', src: Penguin, xp: 1500 },
-  { name: 'Venom', src: Venom, xp: 1500 },
-  { name: 'Joker', src: Joker, xp: 2000 },
-  { name: 'Beast', src: Beast, xp: 2000 },
-  { name: 'Hawkeye', src: Hawkeye, xp: 2000 },
-  { name: 'Human Torch', src: Torch, xp: 2000 },
-  { name: 'Storm', src: Storm, xp: 2000 },
+  [
+    { name: 'Avatar', src: TheAvatar, xp: 500 },
+    { name: 'Captain America', src: Captain, xp: 500},
+    { name: 'Deadpool', src: Deadpool2, xp: 500 },
+    { name: 'Martian Manhunter', src: Martian, xp: 500 },
+    { name: 'Thanos', src: Thanos2, xp: 500},
+    { name: 'Magneto', src: Magneto, xp: 500}
+  ],
+  [
+    { name: 'Batman', src: Batman, xp: 1000 },
+    { name: 'Catwoman', src: Catwoman, xp: 1000 },
+    { name: 'Flash', src: Flash, xp: 1000 },
+    { name: 'Green Lantern', src: Lantern, xp: 1000 },
+    { name: 'Groot', src: Groot, xp: 1000 },
+    { name: 'Spongebob', src: Spongebob, xp: 1000 }
+  ],
+  [
+    { name: 'Wonder Woman', src: Wonder, xp: 1500 },
+    { name: 'Spiderman', src: Spiderman, xp: 1500 },
+    { name: 'Harley Quinn', src: Harley2, xp: 1500 },
+    { name: 'Hawkman', src: Hawk, xp: 1500 },
+    { name: 'Penguin', src: Penguin, xp: 1500 },
+    { name: 'Venom', src: Venom, xp: 1500 }
+  ],
+  [
+    { name: 'Joker', src: Joker, xp: 2000 },
+    { name: 'Beast', src: Beast, xp: 2000 },
+    { name: 'Hawkeye', src: Hawkeye, xp: 2000 },
+    { name: 'Human Torch', src: Torch, xp: 2000 },
+    { name: 'Storm', src: Storm, xp: 2000 },
+    { name: 'Cyclops', src: Cyclops, xp: 2000 }
+  ]
 ];
 
 const App = () => {
