@@ -69,7 +69,6 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
   if(!exerciseVideo.length) return 'Loading...';
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" gap="30px" spacing={2} sx={{ p:'20px', alignItems:'center', marginTop: '40px'}}>
-      {/* <Stack spacing={2} sx={{ gap: { lg: '35px', xs: '20px' } }} textAlign="center"> */}
       <Stack gap="24px" alignItems="center" direction="row" justifyContent="center">
         <Typography sx={{ fontSize: { lg: '45px', xs: '30px' } }} fontWeight={700} textTransform="capitalize">
           <div><h2>{exercise.WorkOut}</h2></div>
@@ -95,9 +94,12 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
         </div>
         ))}
         <Stack gap="30px">
+          <Box>
+          <Typography sx={{ fontSize: { lg: '20px', xs: '30px' } }} fontWeight={600}>Description:</Typography>
           <Typography sx={{ fontSize: { lg: '20px', xs: '18px' } , width: '650px' }} color="#4F4C4C" >
             <div><p> {exercise['Long Explanation']} </p></div>
           </Typography>
+          </Box>
           <Stack direction="row" gap="5px" alignItems="center" >
             <TextField label="Enter Day" type="number" value={day} onChange={(e) => setDay(e.target.value)} style={{ padding: '5px' }} />
             <TextField label="Enter Month" type="number" value={month} onChange={(e) => setMonth(e.target.value)} style={{ padding: '5px' }}/>
