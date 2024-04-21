@@ -42,7 +42,7 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
     startDate.setMonth(desiredMonth - 1); // Months are zero-indexed
     // Assuming the workout lasts for 1 hour
     const endDate = new Date(startDate.getTime());
-    endDate.setHours(endDate.getHours() + 1);
+    endDate.setHours(endDate.getHours());
     // add new workout to calendar 
     const formattedEvent = {
       title: exercise.WorkOut,
