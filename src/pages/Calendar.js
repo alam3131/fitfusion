@@ -25,7 +25,7 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
     return moment(date).isBetween(startOfDay, endOfDay, null, '[]');
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     // Filter exercises that fall within the current week
     const filteredExercises = workoutsToCalender.filter(event => isInCurrentDay(event.start));
     

@@ -26,7 +26,6 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
       <Grid container spacing={2}>
         {inventory.map((avatar) => (
           <Grid item key={avatar.name}>
-            {/* Replace with your avatar image component */}
             <img src={avatar.src} alt={avatar.name}
             onClick = {() => handleAvatarClick(avatar.src)}
             style = {{ cursor: 'pointer' }} />

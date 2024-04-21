@@ -75,6 +75,20 @@ const App = () => {
   const [workOutsToday, setworkOutsToday] = useState([]);
   const today = moment().format('dddd');  // Gets today's day name, e.g., 'Monday'
   const todayPoints = pointsThisWeek[today];  // Access the points for today from the object
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    // Load buttonDisabled status from localStorage on component mount
+    const storedButtonDisabled = localStorage.getItem('buttonDisabled');
+    if (storedButtonDisabled) {
+      setButtonDisabled(JSON.parse(storedButtonDisabled));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save buttonDisabled status to localStorage whenever it changes
+    localStorage.setItem('buttonDisabled', JSON.stringify(buttonDisabled));
+  }, [buttonDisabled]);
 
   // Function to update points earned on a specific day of the week
   const updatePointsForDay = (dayOfWeek, pointsEarned) => {
@@ -216,7 +230,7 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints}/>}/>
+            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled}/>}/>
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
