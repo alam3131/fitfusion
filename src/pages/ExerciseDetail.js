@@ -6,7 +6,7 @@ import {Typography, Stack, Button} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 
-const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
+const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePoints, setTentativePoints, getPointsForLevel}) => {
   const [exerciseDetail, setExcerciseDetail] =useState({});
   const [exerciseVideo, setExcerciseVideo] =useState([]);
   const{WorkOut} = useParams();
@@ -46,10 +46,13 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender}) => {
     // add new workout to calendar 
     const formattedEvent = {
       title: exercise.WorkOut,
+      Intensity_Level: exercise.Intensity_Level,
       start: startDate,
       end: endDate,
     };
     setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
+    const newPoints = tentativePoints + Number(getPointsForLevel(exercise.Intensity_Level)); // Example: User earns 10 points
+    setTentativePoints(newPoints);
   };
 
  

@@ -2,34 +2,75 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
+import { exerciseOptions, fetchData } from '../utils/fetchData';
+import { Box, Button, FormControl, MenuItem, Select, Typography, Paper } from '@mui/material';
+import { json } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = ({ workoutsToCalender, setWorkoutsToCalender }) => {
+const muscleGroups = [
+  'Biceps', 'Triceps', 'Chest', 'Legs', 'Abs', 'Stretching',
+  'Warm Up', 'Lats', 'Hamstring', 'Calves',
+  'Quadriceps', 'Trapezius', 'Shoulders', 'Glutes'
+];
+
+const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExercises, tentativePoints, setTentativePoints, getPointsForLevel }) => {
   const [currentView, setCurrentView] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [exercises, setExercises] = useState([]);
+  const [selectedMuscle, setSelectedMuscle] = useState('');
+  // const [todaysWorkouts, setTodaysWorkouts] = useState([]);
+
+  // const isToday = (date) =>{
+  //   return moment(date).isSame(moment(), 'day');
+  // };
+
+  // const filterTodaysWorkouts = () => {
+  //   const todaysWorkouts = workoutsToCalender.filter((event) => isToday(event.start));
+  //   setTodaysWorkouts(todaysWorkouts);
+  // };
+
+  // useEffect(() => {
+  //   filterTodaysWorkouts();
+  // }, [workoutsToCalender]);
+
+  const isInCurrentDay = (date) => {
+    const startOfDay = moment().startOf('day');
+    const endOfDay = moment().endOf('day');
+    return moment(date).isBetween(startOfDay, endOfDay, null, '[]');
+  };
+
+  useEffect(() => { 
+    // Filter exercises that fall within the current week
+    const filteredExercises = workoutsToCalender.filter(event => isInCurrentDay(event.start));
+    
+    // Calculate the total number of exercises in the current week
+    const totalExercisesInWeek = filteredExercises.length;
+    
+    // Update the state with the total exercises for the week
+    setWeeklyExercises(totalExercisesInWeek);
+  }, [workoutsToCalender]);
+  
 
   useEffect(() => {
-    // Retrieve the current view from local storage when the component mounts
     const storedView = localStorage.getItem('currentView');
-    console.log('Stored view:', storedView);
     if (storedView) {
       setCurrentView(storedView);
     }
   }, []);
 
   useEffect(() => {
-    // Store the current view in local storage when it changes
     localStorage.setItem('currentView', currentView);
   }, [currentView]);
 
   const handleEventClick = (event) => {
-    if (event){
-      if (window.confirm(`Are you sure you want to delete "${event.title}"?`)) {
-        // Filter out the selected event from the events state
-        const updatedEvents = workoutsToCalender.filter((e) => !areEventsEqual(e, event));
-        // Update the parent component's state with the updated events
-        setWorkoutsToCalender(updatedEvents);
-      }
+    // alert("event:" + JSON.stringify(event));
+    if (window.confirm(`Are you sure you want to delete "${event.title}"?`)) {
+      const updatedEvents = workoutsToCalender.filter((e) => !areEventsEqual(e, event));
+      setWorkoutsToCalender(updatedEvents);
+
+      const newPoints = tentativePoints - Number(getPointsForLevel(event.Intensity_Level)); // Example: User loses 5 points
+      setTentativePoints(newPoints);
     }
   };
 
@@ -37,34 +78,96 @@ const MyCalendar = ({ workoutsToCalender, setWorkoutsToCalender }) => {
     setCurrentView(view);
   };
 
-  // Function to check if two events are equal
-  const areEventsEqual = (event1, event2) => {
-    // Compare start times of events to check if they occur on the same day
-    return (
-      moment(event1.start).isSame(event2.start, 'day') &&
-      moment(event1.end).isSame(event2.end, 'day') &&
-      event1.title === event2.title // Add any other conditions for equality, if needed
-    );
+  const handleDateSelect = (slotInfo) => {
+    setSelectedDate(slotInfo.start);
   };
 
+  const handleMuscleGroupClick = async (muscle) => {
+    setSelectedMuscle(muscle);
+    const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+    const filteredExercises = exercisesData.filter(item => item.Muscles.toLowerCase().includes(muscle.toLowerCase()));
+    setExercises(filteredExercises);
+  };
+
+  const handleAddToWorkoutPlan = (exercise) => {
+    const formattedEvent = {
+      title: exercise.WorkOut,
+      Intensity_Level: exercise.Intensity_Level,
+      start: selectedDate,
+      end: moment(selectedDate).add(1, 'hours').toDate()  // Assuming 1-hour duration
+    };
+    setWorkoutsToCalender([...workoutsToCalender, formattedEvent]);
+    const newPoints = tentativePoints + Number(getPointsForLevel(exercise.Intensity_Level)); // Example: User earns 10 points
+    setTentativePoints(newPoints);
+  };
+
+  const areEventsEqual = (event1, event2) => {
+    return moment(event1.start).isSame(event2.start, 'day') &&
+      moment(event1.end).isSame(event2.end, 'day') &&
+      event1.title === event2.title;
+  };
+
+  const dayPropGetter = (date) => {
+    return {
+      style: {
+        backgroundColor: moment(date).isSame(selectedDate, 'day') ? '#c8e6c9' : 'white', // Highlight the selected date
+      }
+    };
+  };
+  
+
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <style>
+        {`
+          .rbc-agenda-time-cell, .rbc-agenda-time-header {
+            display: none;
+          }
+        `}
+      </style>
       <Calendar
         localizer={localizer}
         events={workoutsToCalender}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500, margin: '50px' }}
-        eventPropGetter={(event, start, end, isSelected) => {
-          const backgroundColor = isSelected ? '#3174ad' : '#3a87ad';
-          return { style: { backgroundColor } };
-        }}
-        views={['month', 'agenda']} // Set the views to only 'month'
+        style={{ height: 500, width: '70%' }}
         onSelectEvent={handleEventClick}
-        onView={handleView} // Update currentView when the view changes
+        onSelectSlot={handleDateSelect}
+        selectable
+        views={['month', 'agenda']}
+        onView={handleView}
+        dayPropGetter={dayPropGetter}
+        sx={{ mt: 40 }} 
       />
+      <Typography mt={3} fontWeight={"bold"}>Add to Calendar: </Typography>
+      <FormControl sx={{ width: '50%', mt: 2, mx: 'auto' }}>
+        <Select
+          value={selectedMuscle}
+          onChange={(e) => handleMuscleGroupClick(e.target.value)}
+          displayEmpty
+          sx={{ bgcolor: 'green', color: 'white', '& .MuiSvgIcon-root': { color: 'white' } }}
+        >
+          <MenuItem value="" disabled>Select Muscle Group</MenuItem>
+          {muscleGroups.map((muscle, index) => (
+            <MenuItem key={index} value={muscle}>{muscle}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {exercises.map((exercise, index) => (
+        <Paper key={index} sx={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, m: 1,
+          bgcolor: 'background.paper', borderRadius: 2, width: '40%'
+        }}>
+          <Typography>{exercise.WorkOut} - {exercise.Muscles}</Typography>
+          <Button variant="contained" sx={{ bgcolor: 'green', '&:hover': { bgcolor: 'darkgreen' } }} onClick={() => handleAddToWorkoutPlan(exercise)}>
+            Add to Calendar
+          </Button>
+        </Paper>
+      ))}
     </div>
   );
 };
 
 export default MyCalendar;
+
+

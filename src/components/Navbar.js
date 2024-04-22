@@ -30,14 +30,6 @@ const Navbar = ({ activeTab, setActiveTab, selectedAvatar, points }) => {
           onMouseLeave={(e) => { if (activeTab !== 'Home') e.target.style.borderBottom = 'none'; }} 
           onClick={() => handleTabClick('Home')}>Home</Link>
         <Link 
-          to="/profile" 
-          style={
-            {textDecoration: 'none', color: "#128731", marginBottom: '10px', borderBottom: activeTab === 'My Profile' ? '3px solid #FF2625' : 'none'}
-          }
-          onMouseEnter={(e) => { e.target.style.borderBottom = '3px solid #FF2625'; }}
-          onMouseLeave={(e) => { if (activeTab !== 'My Profile') e.target.style.borderBottom = 'none'; }}
-          onClick={() => handleTabClick('My Profile')}>My Profile</Link>
-        <Link 
           to="/calendar" 
           style={
             {textDecoration: 'none', color: "#128731", marginBottom: '10px', borderBottom: activeTab === 'Calendar' ? '3px solid #FF2625' : 'none'}

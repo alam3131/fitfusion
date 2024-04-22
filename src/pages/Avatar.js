@@ -10,8 +10,8 @@ const Avatar = ({ selectedAvatar, setSelectedAvatar, points, inventory }) => {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Typography variant="h5" sx={{ ml: 77, mb: 2 }} style={{ fontWeight: 'bold' }}>Change Avatar:</Typography>
-      <Box sx={{ mb: 2 }}>
+      <Typography variant="h5" sx={{ ml: 77, mb: 2 }} style={{ fontWeight: 'bold' }} justifyContent="center">Change Avatar:</Typography>
+      <Box sx={{ mb: 2 }} justifyContent="center">
         <img src={selectedAvatar} alt="avatar" style={{ width: '200px', height: '190px', margin: '0 20px', marginLeft: '600px', border: '2px solid black'}}/>
       </Box>
       <Typography mt={5} textAlign={"center"} style={{ fontWeight: 'bold' }} variant="h6">Your Inventory:</Typography>
