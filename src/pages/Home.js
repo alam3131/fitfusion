@@ -7,7 +7,7 @@ import WeeklyPointsGrid from '../components/WeeklyPoints';
 import moment from 'moment';
 
 
-const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyExercises, activeStreak, setActiveStreak, buttonDisabled, setButtonDisabled, todaysWorkouts}) => {
+const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyExercises, activeStreak, setActiveStreak, buttonDisabled, setButtonDisabled, todaysWorkouts, setActiveTab}) => {
   const [lastLoggedDate, setLastLoggedDate] = useState(null);
   const [updateExercises, setUpdateExercises] = useState(0);
   // const [updatePoints, setUpdatePoints] = useState(points);
@@ -47,6 +47,10 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyEx
     }
   }, [currentDate]);
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <Box>
       <Stats points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} updateExercises={updateExercises} />
@@ -54,7 +58,7 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyEx
       <Paper sx={{ border: '2px solid #ddd', borderRadius: '5px', padding: '10px', marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
   <Box sx={{ display: 'flex', alignItems: 'center' }}>
     <Typography variant="h6" sx={{ marginBottom: '10px', textAlign: 'center', marginRight: '10px' }}>Today's Workouts:</Typography>
-    <Link component={Button} to="/search" variant="contained" sx={{ mt: 'auto', display: 'block', width: '150px', textAlign: 'center' }}>
+    <Link component={Button} to="/search" onClick={() => handleTabClick('Search')} variant="contained" sx={{ mt: 'auto', display: 'block', width: '150px', textAlign: 'center' }}>
             Add More
           </Link>
   </Box>
@@ -62,7 +66,6 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyEx
     <Typography key={index} sx={{ marginBottom: '5px', textAlign: 'center' }}>{workout.title}</Typography>
   ))}
 </Paper>
-
       <Button variant="contained" sx={{ mt: 2, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}} onClick={handleButtonClick} disabled={buttonDisabled}>
         Log Workout
       </Button>

@@ -295,7 +295,7 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} todaysWorkouts={todaysWorkouts}/>}/>
+            <Route path="/" element={<Home setActiveTab={setActiveTab} pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} todaysWorkouts={todaysWorkouts}/>}/>
             <Route path="/search/:WorkOut" element={<ExerciseDetail setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
