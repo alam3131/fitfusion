@@ -123,6 +123,23 @@ const App = () => {
   const today = moment().format('dddd');  // Gets today's day name, e.g., 'Monday'
   const todayPoints = pointsThisWeek[today];  // Access the points for today from the object
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [todaysWorkouts, setTodaysWorkouts] = useState([]); // State variable to hold today's workouts
+  
+  // Function to check if a date is today
+  const isToday = (date) => {
+    return moment(date).isSame(moment(), 'day');
+  };
+
+  // Function to filter workouts for today
+  const filterTodaysWorkouts = () => {
+    const todaysWorkouts = workoutsToCalender.filter((event) => isToday(event.start));
+    setTodaysWorkouts(todaysWorkouts);
+  };
+
+  // useEffect to filter today's workouts when workoutsToCalender changes
+  useEffect(() => {
+    filterTodaysWorkouts();
+  }, [workoutsToCalender]);
 
   useEffect(() => {
     // Load buttonDisabled status from localStorage on component mount
@@ -278,7 +295,7 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled}/>}/>
+            <Route path="/" element={<Home pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} todaysWorkouts={todaysWorkouts}/>}/>
             <Route path="/search/:WorkOut" element={<ExerciseDetail setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />

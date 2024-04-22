@@ -18,7 +18,21 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [exercises, setExercises] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState('');
-  
+  // const [todaysWorkouts, setTodaysWorkouts] = useState([]);
+
+  // const isToday = (date) =>{
+  //   return moment(date).isSame(moment(), 'day');
+  // };
+
+  // const filterTodaysWorkouts = () => {
+  //   const todaysWorkouts = workoutsToCalender.filter((event) => isToday(event.start));
+  //   setTodaysWorkouts(todaysWorkouts);
+  // };
+
+  // useEffect(() => {
+  //   filterTodaysWorkouts();
+  // }, [workoutsToCalender]);
+
   const isInCurrentDay = (date) => {
     const startOfDay = moment().startOf('day');
     const endOfDay = moment().endOf('day');
