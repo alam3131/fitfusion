@@ -24,7 +24,7 @@ const getPointsForLevel = (level) => {
     default:
       return 0;
   }
-};
+}; //******************************************* */
 
 const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsToCalender }) => {
   const [search, setSearch] = useState('');
@@ -86,8 +86,9 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
   }
 
   const handleExcerciseClick = (exercise) => {
-    earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
-  };
+    // earnPoints(Number(getPointsForLevel(exercise.Intensity_Level)));
+    // alert("Muscle Groups" + JSON.stringify(currentExercises));
+  }; //****************************************** */
   
   useEffect(() => {
     handleLevelAndMuscleFilter();

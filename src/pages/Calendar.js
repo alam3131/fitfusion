@@ -4,6 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import { Box, Button, FormControl, MenuItem, Select, Typography, Paper } from '@mui/material';
+import { json } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -13,7 +14,7 @@ const muscleGroups = [
   'Quadriceps', 'Trapezius', 'Shoulders', 'Glutes'
 ];
 
-const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExercises }) => {
+const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExercises, tentativePoints, setTentativePoints, getPointsForLevel }) => {
   const [currentView, setCurrentView] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [exercises, setExercises] = useState([]);
@@ -63,9 +64,13 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
   }, [currentView]);
 
   const handleEventClick = (event) => {
+    // alert("event:" + JSON.stringify(event));
     if (window.confirm(`Are you sure you want to delete "${event.title}"?`)) {
       const updatedEvents = workoutsToCalender.filter((e) => !areEventsEqual(e, event));
       setWorkoutsToCalender(updatedEvents);
+
+      const newPoints = tentativePoints - Number(getPointsForLevel(event.Intensity_Level)); // Example: User loses 5 points
+      setTentativePoints(newPoints);
     }
   };
 
@@ -87,10 +92,13 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
   const handleAddToWorkoutPlan = (exercise) => {
     const formattedEvent = {
       title: exercise.WorkOut,
+      Intensity_Level: exercise.Intensity_Level,
       start: selectedDate,
       end: moment(selectedDate).add(1, 'hours').toDate()  // Assuming 1-hour duration
     };
     setWorkoutsToCalender([...workoutsToCalender, formattedEvent]);
+    const newPoints = tentativePoints + Number(getPointsForLevel(exercise.Intensity_Level)); // Example: User earns 10 points
+    setTentativePoints(newPoints);
   };
 
   const areEventsEqual = (event1, event2) => {
@@ -129,8 +137,10 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
         views={['month', 'agenda']}
         onView={handleView}
         dayPropGetter={dayPropGetter}
+        sx={{ mt: 40 }} 
       />
-      <FormControl fullWidth sx={{ mt: 2 }}>
+      <Typography mt={3} fontWeight={"bold"}>Add to Calendar: </Typography>
+      <FormControl sx={{ width: '50%', mt: 2, mx: 'auto' }}>
         <Select
           value={selectedMuscle}
           onChange={(e) => handleMuscleGroupClick(e.target.value)}
@@ -146,7 +156,7 @@ const MyCalendar = ({ setWorkoutsToCalender, workoutsToCalender, setWeeklyExerci
       {exercises.map((exercise, index) => (
         <Paper key={index} sx={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, m: 1,
-          bgcolor: 'background.paper', borderRadius: 2, width: '100%'
+          bgcolor: 'background.paper', borderRadius: 2, width: '40%'
         }}>
           <Typography>{exercise.WorkOut} - {exercise.Muscles}</Typography>
           <Button variant="contained" sx={{ bgcolor: 'green', '&:hover': { bgcolor: 'darkgreen' } }} onClick={() => handleAddToWorkoutPlan(exercise)}>

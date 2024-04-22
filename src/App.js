@@ -124,6 +124,20 @@ const App = () => {
   const todayPoints = pointsThisWeek[today];  // Access the points for today from the object
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [todaysWorkouts, setTodaysWorkouts] = useState([]); // State variable to hold today's workouts
+  const [tentativePoints, setTentativePoints] = useState(0)
+  
+  const getPointsForLevel = (level) => {
+    switch (level) {
+      case 'Beginner':
+        return 100;
+      case 'Intermediate':
+        return 200;
+      case 'Expert':
+        return 300;
+      default:
+        return 0;
+    }
+  };
   
   // Function to check if a date is today
   const isToday = (date) => {
@@ -147,6 +161,7 @@ const App = () => {
     if (storedButtonDisabled) {
       setButtonDisabled(JSON.parse(storedButtonDisabled));
     }
+    // alert("today's workout: " + JSON.stringify(todaysWorkouts));
   }, []);
 
   useEffect(() => {
@@ -295,11 +310,11 @@ const App = () => {
     <Box width="400px" sx={{ width: { x1: '1488px'}}} m="auto">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} selectedAvatar={selectedAvatar} points={points}/>
         <Routes>
-            <Route path="/" element={<Home setActiveTab={setActiveTab} pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} todaysWorkouts={todaysWorkouts}/>}/>
-            <Route path="/search/:WorkOut" element={<ExerciseDetail setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
+            <Route path="/" element={<Home updatePointsForDay={updatePointsForDay} tentativePoints={tentativePoints} earnPoints={earnPoints} updatePoints={updatePoints} setActiveTab={setActiveTab} pointsThisWeek={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} setActiveStreak = {setActiveStreak} todayPoints={todayPoints} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} todaysWorkouts={todaysWorkouts}/>}/>
+            <Route path="/search/:WorkOut" element={<ExerciseDetail  getPointsForLevel={getPointsForLevel} tentativePoints={tentativePoints} setTentativePoints={setTentativePoints} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/search" element={<Search earnPoints={earnPoints} points={points} setWorkoutsToCalender={setWorkoutsToCalender} workoutsToCalender={workoutsToCalender}/>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/calendar" element={<Calendar workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender} setWeeklyExercises={setWeeklyExercises}/>} />
+            <Route path="/calendar" element={<Calendar getPointsForLevel={getPointsForLevel} workoutsToCalender={workoutsToCalender} setWorkoutsToCalender={setWorkoutsToCalender} setWeeklyExercises={setWeeklyExercises} tentativePoints={tentativePoints} setTentativePoints={setTentativePoints}/>} />
             <Route path="/avatar" element={<Avatar selectedAvatar={selectedAvatar} setSelectedAvatar={setSelectedAvatar} points={points} inventory={inventory}/>} />
             <Route path="/avatar_status" element={<AvatarStatus selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} shopItems={shopItems}/>} />
             <Route path="/order_summary" element={<OrderSummary selectedImages={selectedImages} setSelectedImages={setSelectedImages} points={points} losePoints={losePoints} shopItems={shopItems} setShopItems={setShopItems} inventory={inventory} setInventory={setInventory}/>} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Stats from '../components/Stats';
 import SearchExercises from '../components/SearchExercises';
@@ -7,7 +7,7 @@ import WeeklyPointsGrid from '../components/WeeklyPoints';
 import moment from 'moment';
 
 
-const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyExercises, activeStreak, setActiveStreak, buttonDisabled, setButtonDisabled, todaysWorkouts, setActiveTab}) => {
+const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, updatePoints, tentativePoints, weeklyExercises, activeStreak, setActiveStreak, buttonDisabled, setButtonDisabled, todaysWorkouts, setActiveTab, updatePointsForDay}) => {
   const [lastLoggedDate, setLastLoggedDate] = useState(null);
   const [updateExercises, setUpdateExercises] = useState(0);
   // const [updatePoints, setUpdatePoints] = useState(points);
@@ -20,6 +20,11 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyEx
     // setUpdatePoints(points + todayPoints);
     setUpdateExercises(updateExercises + weeklyExercises);
     setActiveStreak(activeStreak + 1);
+    const newPoints = points + Number(tentativePoints); // Example: User earns 10 points
+    // alert("number of points:" + tentativePoints);
+    updatePoints(newPoints);
+    const dayOfWeek = moment().format('dddd');
+    updatePointsForDay(dayOfWeek, Number(tentativePoints));
   };
 
   const handleTempButton = () => {
@@ -49,27 +54,31 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, weeklyEx
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    // alert("Workout:" + JSON.stringify(todaysWorkouts));
   };
 
   return (
     <Box>
       <Stats points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} updateExercises={updateExercises} />
       <WeeklyPointsGrid pointsData={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} />
-      <Paper sx={{ border: '2px solid #ddd', borderRadius: '5px', padding: '10px', marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-    <Typography variant="h6" sx={{ marginBottom: '10px', textAlign: 'center', marginRight: '10px' }}>Today's Workouts:</Typography>
-    <Link component={Button} to="/search" onClick={() => handleTabClick('Search')} variant="contained" sx={{ mt: 'auto', display: 'block', width: '150px', textAlign: 'center' }}>
-            Add More
-          </Link>
-  </Box>
-  {todaysWorkouts.map((workout, index) => (
-    <Typography key={index} sx={{ marginBottom: '5px', textAlign: 'center' }}>{workout.title}</Typography>
-  ))}
-</Paper>
-      <Button variant="contained" sx={{ mt: 2, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}} onClick={handleButtonClick} disabled={buttonDisabled}>
-        Log Workout
-      </Button>
-      <Button sx={{ mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}} onClick={handleTempButton}>Change current Date button</Button> 
+      <Paper sx={{ width: '40%', border: '2px solid #ddd', borderRadius: '5px', padding: '10px', marginTop: '20px', mx: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h6" sx={{ marginBottom: '10px', textAlign: 'center', marginRight: '10px' }}>Today's Workouts:</Typography>
+        </Box>
+        {todaysWorkouts.map((workout, index) => (
+          <Typography key={index} sx={{ marginBottom: '5px', textAlign: 'center' }}>{workout.title}</Typography>
+        ))}
+      </Paper>
+      <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
+        <Button variant="contained" sx={{ mt: 2, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}} onClick={handleButtonClick} disabled={buttonDisabled}>
+          Log Workouts
+        </Button>
+        <Button component={Link} to="/search" onClick={() => handleTabClick('Search')} variant="contained" sx={{ mt: 2, mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}}>
+          Add Workouts
+        </Button>
+      </Stack>
+
+      {/* <Button sx={{ mx: 'auto', display: 'block', width: '150px', textAlign: 'center'}} onClick={handleTempButton}>Change current Date button</Button>  */}
     </Box>
   );
 }
