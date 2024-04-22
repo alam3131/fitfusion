@@ -9,7 +9,7 @@ const Stats = ({activeStreak, points, weeklyExercises, updateExercises, updatePo
   // New statistics to show more user engagement and achievements
   const stats = [
     { key: 'totalPoints', label: 'Total Points', value: points, color: '#FFD700' }, // Gold color for a premium feel
-    { key: 'exercisesCompleted', label: 'Exercises Completed', value: updateExercises, color: '#0088FE' }, // Bright blue for a calm, trustworthy feel
+    { key: 'exercisesCompleted', label: 'Total Exercises Completed', value: updateExercises, color: '#0088FE' }, // Bright blue for a calm, trustworthy feel
     { key: 'activeStreak', label: 'Active Streak', value: activeStreak, color: '#32CD32' } // Lime green for energy and growth
   ];
 
@@ -31,9 +31,6 @@ const Stats = ({activeStreak, points, weeklyExercises, updateExercises, updatePo
           </Grid>
         ))}
       </Grid>
-      <Typography variant="subtitle1" sx={{ mt: 3, textAlign: 'center' }}>
-        Keep up the great work! Every exercise counts towards your goals.
-      </Typography>
     </Box>
   );
 }

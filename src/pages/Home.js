@@ -13,6 +13,22 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, updatePo
   // const [updatePoints, setUpdatePoints] = useState(points);
   const [currentDate, setCurrentDate] = useState(moment().format('dddd'));
 
+  // Hooks to store exercises completed in local storage
+  useEffect(() => {
+    // Load exercises completed from localStorage on component mount
+    const exercises = Number(localStorage.getItem('updateExercises'));
+    if (exercises) {
+      setUpdateExercises(Number(exercises))
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save exercises completed to localStorage on change
+    if (updateExercises) {
+      localStorage.setItem('updateExercises', updateExercises);
+    }
+  }, [updateExercises]);
+
   const handleButtonClick = () => {
     setButtonDisabled(true);
     setLastLoggedDate(moment().format('dddd'));
@@ -60,6 +76,9 @@ const Home = ({ todayPoints, pointsThisWeek, setPointsThisWeek, points, updatePo
   return (
     <Box>
       <Stats points={points} weeklyExercises={weeklyExercises} activeStreak={activeStreak} updateExercises={updateExercises} />
+      <Typography  fontWeight="bold" variant="subtitle1" sx={{ mt: 3, textAlign: 'center' }}>
+        Daily Points Earned:
+      </Typography>
       <WeeklyPointsGrid pointsData={pointsThisWeek} setPointsThisWeek={setPointsThisWeek} />
       <Paper sx={{ width: '40%', border: '2px solid #ddd', borderRadius: '5px', padding: '10px', marginTop: '20px', mx: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
