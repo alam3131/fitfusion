@@ -1,22 +1,35 @@
-export const exerciseOptions =  {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-        'X-RapidAPI-Host': 'work-out-api1.p.rapidapi.com'
-    }
+export const exerciseUrl = 'https://exercisedb.p.rapidapi.com/exercises';
+export const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
+
+export const exerciseOptions = {
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+		'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+	}
 };
 
 export const youtubeOptions = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
-      'X-RapidAPI-Key': '0857ff26c6mshfd700d4a86bd0a6p104498jsne068947d7a28',
-    },
-  };
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+		'x-rapidapi-host': 'youtube-search-and-download.p.rapidapi.com'
+	}
+};
 
 export const fetchData = async (url, options) => {
-    const response = await fetch(url,options);
-    const data = await response.json()
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text(); // TODO: May have to change this to .json()
+      console.log(result);
 
-    return data;
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+
+    // const response = await fetch(url,options);
+    // const data = await response.json()
+
+    // return data;
 }

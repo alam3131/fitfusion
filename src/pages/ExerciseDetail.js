@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import {Box} from '@mui/material'
-import {exerciseOptions,fetchData, youtubeOptions} from '../utils/fetchData';
+import {exerciseOptions, fetchData, youtubeOptions, youtubeSearchUrl} from '../utils/fetchData';
 import {Typography, Stack, Button} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -58,8 +58,6 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
  
   useEffect(() => {
     const fetchExcerciseData = async () => {
-
-      const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
       //const excersieDetailData = await fetchData( 'https://work-out-api1.p.rapidapi.com/search',exerciseOptions);
       //const filteredExercises = excersieDetailData.filter(item => item.Muscles.toLowerCase().includes(WorkOut.toLowerCase()));
       console.log({WorkOut});
