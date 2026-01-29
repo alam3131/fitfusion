@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
-import { exerciseOptions, fetchData } from '../utils/fetchData';
+import { exerciseOptions, exerciseUrl, fetchData } from '../utils/fetchData';
 import { Link } from 'react-router-dom'; 
 import Pagination from '@mui/material/Pagination';
 
@@ -36,7 +36,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
 
   const handleLevelAndMuscleFilter = async () => {
     if (selectedMuscle && selectedLevel) {
-      const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+      const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
       const filteredExercises = exercisesData.filter(
         item => item.Muscles.toLowerCase().includes(selectedMuscle.toLowerCase()) &&
                 item.Intensity_Level.toLowerCase().includes(selectedLevel.toLowerCase())
@@ -51,7 +51,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
 
   const handleLevelGroupClick = async (Level) => {
     setLevel(Level); 
-    const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+    const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
     const filteredByLevel = exercisesData.filter(item => item.Intensity_Level.toLowerCase().includes(Level.toLowerCase()));
     setExcercises(filteredByLevel);
   };
@@ -68,14 +68,14 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
 
   const handleMuscleGroupClick = async (muscle) => {
     setSelectedMuscle(muscle); 
-    const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+    const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
     const filteredExercises = exercisesData.filter(item => item.Muscles.toLowerCase().includes(muscle.toLowerCase()));
     setExcercises(filteredExercises);
   };
 
   const handleSearch = async () => {
     if (search) {
-      const exercisesData = await fetchData('https://work-out-api1.p.rapidapi.com/search', exerciseOptions);
+      const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
       const searchedExercises = exercisesData.filter(
         item => item.WorkOut.toLowerCase().includes(search)||item.Muscles.toLowerCase().includes(search)|| item.Intensity_Level.toLowerCase().includes(search) 
         || (item['Long Explanation'].toLowerCase().includes(search)),);
