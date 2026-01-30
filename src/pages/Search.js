@@ -4,22 +4,17 @@ import { exerciseOptions, exerciseUrl, fetchData } from '../utils/fetchData';
 import { Link } from 'react-router-dom'; 
 import Pagination from '@mui/material/Pagination';
 
-const muscleGroups = [
-  'Biceps', 'Triceps', 'Chest', 'Legs', 'Abs', 'Stretching', 
-  'Warm Up', 'Lats', 'Hamstring', 'Calves',
-  'Quadriceps', 'Trapezius', 'Shoulders', 'Glutes'
-];
-
-const levelGroups =['Beginner','Intermediate','Expert'];
+export const muscleGroups = await fetchData(`${exerciseUrl}/targetList`, exerciseOptions);
+const levelGroups =['beginner','intermediate','advanced'];
 
 // Function to calculate points based on level
 const getPointsForLevel = (level) => {
   switch (level) {
-    case 'Beginner':
+    case 'beginner':
       return 100;
-    case 'Intermediate':
+    case 'intermediate':
       return 200;
-    case 'Expert':
+    case 'advanced':
       return 300;
     default:
       return 0;
@@ -129,7 +124,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
           Muscle Group
         </MenuItem>
         {muscleGroups.map((muscle, index) => (
-          <MenuItem key={index} value={muscle}>{muscle}</MenuItem>
+          <MenuItem key={index} value={muscle}>{muscle.charAt(0).toUpperCase() + muscle.slice(1)}</MenuItem>
         ))}
         </Select>
       </FormControl>
@@ -145,7 +140,7 @@ const SearchExcercises = ({ earnPoints, points, setWorkoutsToCalender, workoutsT
           Experience Level
         </MenuItem>
         {levelGroups.map((level, index) => (
-          <MenuItem key={index} value={level}>{level}</MenuItem>
+          <MenuItem key={index} value={level}>{level.charAt(0).toUpperCase() + level.slice(1)}</MenuItem>
         ))}
         </Select>
       </FormControl>

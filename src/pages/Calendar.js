@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import { muscleGroups } from "./Search";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-import { exerciseOptions, exerciseUrl, fetchData } from "../utils/fetchData";
+import {
+  exerciseOptions,
+  exerciseUrl,
+  fetchData,
+} from "../utils/fetchData";
 import {
   Box,
   Button,
@@ -15,23 +20,6 @@ import {
 import { json } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
-
-const muscleGroups = [
-  "Biceps",
-  "Triceps",
-  "Chest",
-  "Legs",
-  "Abs",
-  "Stretching",
-  "Warm Up",
-  "Lats",
-  "Hamstring",
-  "Calves",
-  "Quadriceps",
-  "Trapezius",
-  "Shoulders",
-  "Glutes",
-];
 
 const MyCalendar = ({
   setWorkoutsToCalender,
@@ -196,7 +184,7 @@ const MyCalendar = ({
           </MenuItem>
           {muscleGroups.map((muscle, index) => (
             <MenuItem key={index} value={muscle}>
-              {muscle}
+              {muscle.charAt(0).toUpperCase() + muscle.slice(1)}
             </MenuItem>
           ))}
         </Select>
