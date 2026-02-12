@@ -77,8 +77,18 @@ const SearchExcercises = ({
 
   const handleLevelGroupClick = async (Level) => {
     setLevel(Level);
-    const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
-    // console.log(exercisesData[0].difficulty);
+    let offset = 0; // Offset to track where last request left off
+    let exercisesData = []; // Array of exercises retrieved from request
+
+    // Make two requests to get a total of 40 exercises
+    // Appends responses to exercisesData array
+    for (let i = 0; i < 4; i++) {
+      const response = await fetchData(`${exerciseUrl}?offset=${offset}`,
+        exerciseOptions,
+      );
+      exercisesData = exercisesData.concat(response);
+      offset += 10;
+    }
     const filteredByLevel = exercisesData.filter((item) =>
       item.difficulty.toLowerCase().includes(Level.toLowerCase()),
     );
@@ -99,28 +109,54 @@ const SearchExcercises = ({
   };
 
   const handleMuscleGroupClick = async (muscle) => {
-    setSelectedMuscle(muscle);
-    const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
-    const filteredExercises = exercisesData.filter((item) =>
-      item.Muscles.toLowerCase().includes(muscle.toLowerCase()),
-    );
-    setExcercises(filteredExercises);
+    let offset = 0; // Offset to track where last request left off
+    let exercisesData = []; // Array of exercises retrieved from request
+
+    // Make two requests to get a total of 20 exercises
+    // Appends responses to exercisesData array
+    for (let i = 0; i < 2; i++) {
+      const response = await fetchData(
+        `${exerciseUrl}/target/${selectedMuscle}?offset=${offset}`,
+        exerciseOptions,
+      );
+      exercisesData = exercisesData.concat(response);
+      offset += 10;
+    }
+    setExcercises(exercisesData);
   };
 
   const handleSearch = async () => {
     if (search) {
       // Searches based on names that have the keyword
-      const exercisesData = await fetchData(`${exerciseUrl}/name/${search}`, exerciseOptions); 
-      // TODO: Refactor this code so filters work together with search bar
-      // const searchedExercises = exercisesData.filter(
-      //   (item) =>
-      //     item.name.toLowerCase().includes(search) ||
-      //     [item.target, ...(item.secondaryMuscles ?? [])].join(", ").toLowerCase().includes(search) ||
-      //     item.difficulty.toLowerCase().includes(search)
-      // );
-      setSearch("");
-      setExcercises(exercisesData);
+      const exercisesData = await fetchData(
+        `${exerciseUrl}/name/${search}`,
+        exerciseOptions,
+      );
+      let searchedExercises = exercisesData;
+
+      if (selectedMuscle && selectedLevel) {
+        searchedExercises = searchedExercises.filter(
+          (item) =>
+            [item.target, ...(item.secondaryMuscles ?? [])].join(", ").toLowerCase().includes(selectedMuscle) &&
+            item.difficulty.toLowerCase().includes(selectedLevel.toLowerCase())
+        );
+      } else if (selectedMuscle) {
+        searchedExercises = searchedExercises.filter(
+          (item) =>
+            [item.target, ...(item.secondaryMuscles ?? [])].join(", ").toLowerCase().includes(selectedMuscle)
+        );
+      } else if (selectedLevel) {
+        searchedExercises = searchedExercises.filter(
+          (item) =>
+            item.difficulty.toLowerCase().includes(selectedLevel.toLowerCase())
+        );
+      }
+
+      setExcercises(searchedExercises);
+    } else { // Handles when search bar is not filled
+      handleLevelAndMuscleFilter();
     }
+    setCurrentPage(1); // Resets pagination every time a search is performed
   };
 
   const handleExcerciseClick = (exercise) => {
@@ -129,7 +165,7 @@ const SearchExcercises = ({
   }; //****************************************** */
 
   useEffect(() => {
-    handleLevelAndMuscleFilter();
+    // handleLevelAndMuscleFilter();
   }, [selectedMuscle, selectedLevel]);
 
   useEffect(() => {
@@ -272,7 +308,10 @@ const SearchExcercises = ({
               <Box p={2} borderRadius={4} sx={{ color: "#fff" }}>
                 <Typography variant="h6">{exercise.name}</Typography>
                 <Typography variant="body1">
-                  Muscles: {[exercise.target, ...(exercise.secondaryMuscles ?? [])].join(", ")}
+                  Muscles:{" "}
+                  {[exercise.target, ...(exercise.secondaryMuscles ?? [])].join(
+                    ", ",
+                  )}
                 </Typography>
                 <Typography variant="body2">
                   Level: {exercise.difficulty}

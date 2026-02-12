@@ -292,7 +292,7 @@ const App = () => {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.keyCode === 32) { // Check if the pressed key is the space bar (key code 32)
-        clearLocalStorage();
+        // clearLocalStorage(); // For Testing purposes
       }
     };
 

@@ -16,7 +16,7 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
   const [month, setMonth] = useState('');
 
   const handleAddToWorkoutPlan = (exercise) => {
-    console.log(`Adding "${exercise.WorkOut}" to workout plan`);
+    console.log(`Adding "${exercise.name}" to workout plan`);
     // Convert input values to numbers
     const desiredDay = parseInt(day, 10);
     const desiredMonth = parseInt(month, 10);
@@ -45,13 +45,13 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
     endDate.setHours(endDate.getHours());
     // add new workout to calendar 
     const formattedEvent = {
-      title: exercise.WorkOut,
-      Intensity_Level: exercise.Intensity_Level,
+      title: exercise.name,
+      Intensity_Level: exercise.difficulty,
       start: startDate,
       end: endDate,
     };
     setWorkoutsToCalender([...workoutsToCalender,formattedEvent]);
-    const newPoints = tentativePoints + Number(getPointsForLevel(exercise.Intensity_Level)); // Example: User earns 10 points
+    const newPoints = tentativePoints + Number(getPointsForLevel(exercise.difficulty)); // Example: User earns 10 points
     setTentativePoints(newPoints);
   };
 
@@ -60,8 +60,8 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
     const fetchExcerciseData = async () => {
       //const excersieDetailData = await fetchData( 'https://work-out-api1.p.rapidapi.com/search',exerciseOptions);
       //const filteredExercises = excersieDetailData.filter(item => item.Muscles.toLowerCase().includes(WorkOut.toLowerCase()));
-      console.log({WorkOut});
-      const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exercise.WorkOut} exercise`, youtubeOptions);
+      console.log("here", exercise);
+      const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exercise.name} exercise`, youtubeOptions);
       setExcerciseVideo(exerciseVideosData.contents);
     }
     fetchExcerciseData();
@@ -72,13 +72,15 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" gap="30px" spacing={2} sx={{ p:'20px', alignItems:'center', marginTop: '40px'}}>
       <Stack gap="24px" alignItems="center" direction="row" justifyContent="center">
         <Typography sx={{ fontSize: { lg: '45px', xs: '30px' } }} fontWeight={700} textTransform="capitalize">
-          <div><h2>{exercise.WorkOut}</h2></div>
+          <div><h2>{exercise.name}</h2></div>
           </Typography>
           <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '140px', height: '50px' }}>
-            <div><p>{exercise.Muscles}</p></div>
+            <div><p>{[exercise.target, ...(exercise.secondaryMuscles ?? [])].join(
+                    ", ",
+            )}</p></div>
             </Button>
           <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '140px', height: '50px' }}>
-            <div><p>{exercise.Intensity_Level}</p></div>
+            <div><p>{exercise.difficulty}</p></div>
             </Button>
       </Stack>
       <Stack direction="row" gap="50px" alignItems="center">
