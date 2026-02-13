@@ -3,7 +3,7 @@ export const exerciseUrl = "https://exercisedb.p.rapidapi.com/exercises";
 export const exerciseOptions = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": REACT_APP_RAPID_API_KEY,
+    "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
     "x-rapidapi-host": "exercisedb.p.rapidapi.com",
   },
 };
