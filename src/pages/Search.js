@@ -164,9 +164,16 @@ const SearchExcercises = ({
     // alert("Muscle Groups" + JSON.stringify(currentExercises));
   }; //****************************************** */
 
-  useEffect(() => {
-    // handleLevelAndMuscleFilter();
-  }, [selectedMuscle, selectedLevel]);
+  const capitalizeEachWord = (str) => {
+    return str
+      .toLowerCase() // Convert the whole string to lowercase for consistency
+      .split(' ')    // Split the string into an array of words based on spaces
+      .map(word => { // Iterate over each word
+        // Capitalize the first letter and add the rest of the word
+        return word.charAt(0).toUpperCase() + word.slice(1); 
+      })
+      .join(' ');    // Join the words back into a single string with spaces
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -306,7 +313,7 @@ const SearchExcercises = ({
               }}
             >
               <Box p={2} borderRadius={4} sx={{ color: "#fff" }}>
-                <Typography variant="h6">{exercise.name}</Typography>
+                <Typography variant="h6">{capitalizeEachWord(exercise.name)}</Typography>
                 <Typography variant="body1">
                   Muscles:{" "}
                   {[exercise.target, ...(exercise.secondaryMuscles ?? [])].join(
