@@ -1,20 +1,10 @@
 export const exerciseUrl = "https://exercisedb.p.rapidapi.com/exercises";
-export const youtubeSearchUrl =
-  "https://youtube-search-and-download.p.rapidapi.com";
 
 export const exerciseOptions = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
+    "x-rapidapi-key": REACT_APP_RAPID_API_KEY,
     "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-  },
-};
-
-export const youtubeOptions = {
-  method: "GET",
-  headers: {
-    "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
-    "x-rapidapi-host": "youtube-search-and-download.p.rapidapi.com",
   },
 };
 
