@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {useParams} from 'react-router-dom';
 import {Box} from '@mui/material'
 import {exerciseOptions, fetchData, youtubeOptions, youtubeSearchUrl} from '../utils/fetchData';
 import {Typography, Stack, Button} from '@mui/material';
@@ -7,9 +6,7 @@ import { useLocation } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 
 const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePoints, setTentativePoints, getPointsForLevel}) => {
-  const [exerciseDetail, setExcerciseDetail] =useState({});
-  const [exerciseVideo, setExcerciseVideo] =useState([]);
-  const{WorkOut} = useParams();
+  const [exerciseImage, setExcerciseImage] = useState('');
   const location = useLocation();
   const exercise = location.state;
   const [day, setDay] = useState('');
@@ -57,17 +54,26 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
 
  
   useEffect(() => {
+    let imageUrl;
     const fetchExcerciseData = async () => {
-      //const excersieDetailData = await fetchData( 'https://work-out-api1.p.rapidapi.com/search',exerciseOptions);
-      //const filteredExercises = excersieDetailData.filter(item => item.Muscles.toLowerCase().includes(WorkOut.toLowerCase()));
-      console.log("here", exercise);
-      const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exercise.name} exercise`, youtubeOptions);
-      setExcerciseVideo(exerciseVideosData.contents);
+      try {
+        const response = await fetch(`https://exercisedb.p.rapidapi.com/image?resolution=1080&exerciseId=${exercise.id}`, exerciseOptions);
+        const blob = await response.blob();
+        imageUrl = URL.createObjectURL(blob);
+        setExcerciseImage(imageUrl);
+      } catch (error) {
+        console.error(error);
+      }
     }
     fetchExcerciseData();
-  }, [WorkOut])
 
-  if(!exerciseVideo.length) return 'Loading...';
+    // Revoke when the component unmounts to prevent memory leaks
+    return () => {
+      if (imageUrl) URL.revokeObjectURL(imageUrl);
+    };
+  }, [exercise?.id])
+
+  if(!exerciseImage) return 'Loading...';
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px" gap="30px" spacing={2} sx={{ p:'20px', alignItems:'center', marginTop: '40px'}}>
       <Stack gap="24px" alignItems="center" direction="row" justifyContent="center">
@@ -84,18 +90,13 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
             </Button>
       </Stack>
       <Stack direction="row" gap="50px" alignItems="center">
-        {exerciseVideo?.slice(0, 1)?.map((item, index) => (
         <div>
-          <iframe
-          width="660"
-          height="415"
-          src={`https://www.youtube.com/embed/${item.video.videoId}`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen="true"
-          ></iframe>
+          <img 
+          width="600"
+          height="430"
+          src={exerciseImage} 
+          alt="Workout Image" />
         </div>
-        ))}
         <Stack gap="30px">
           <Box>
           <Typography sx={{ fontSize: { lg: '20px', xs: '30px' } }} fontWeight={600}>Description:</Typography>

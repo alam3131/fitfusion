@@ -28,9 +28,4 @@ export const fetchData = async (url, options) => {
   } catch (error) {
     console.error(error);
   }
-
-  // const response = await fetch(url,options);
-  // const data = await response.json()
-
-  // return data;
 };
