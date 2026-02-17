@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Box} from '@mui/material'
-import {exerciseOptions, fetchData, youtubeOptions, youtubeSearchUrl} from '../utils/fetchData';
+import {exerciseOptions, fetchData} from '../utils/fetchData';
 import {Typography, Stack, Button} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import TextField from '@mui/material/TextField';

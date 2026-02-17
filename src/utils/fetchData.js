@@ -1,12 +1,10 @@
-// export const exerciseUrl = "https://exercisedb.p.rapidapi.com/exercises";
-
-// export const exerciseOptions = {
-//   method: "GET",
-//   headers: {
-//     "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
-//     "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-//   },
-// };
+export const exerciseOptions = {
+  method: "GET",
+  headers: {
+    "x-rapidapi-key": process.env.RAPID_API_KEY,
+    "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+  },
+};
 
 // export const fetchData = async (url, options) => {
 //   try {
@@ -19,10 +17,17 @@
 //     console.error(error);
 //   }
 // };
-export const fetchData = async () => {
+export const getMuscleGroups = async () => {
+  const data = await fetchData(`${exerciseUrl}/targetList`);
+  return data || [];
+};
+
+export const exerciseUrl = "https://exercisedb.p.rapidapi.com/exercises";
+
+export const fetchData = async (url) => {
   try {
     // Call your serverless function
-    const response = await fetch("/.netlify/functions/rapid-proxy");
+    const response = await fetch(`/.netlify/functions/rapid-proxy?targetUrl=${encodeURIComponent(url)}`);
     const result = await response.json();
 
     return result;

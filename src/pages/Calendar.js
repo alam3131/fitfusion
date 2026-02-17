@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-import { muscleGroups } from "./Search";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
+import { muscleGroups } from "../constants/muscleGroups";
 import {
-  exerciseOptions,
   exerciseUrl,
   fetchData,
 } from "../utils/fetchData";
@@ -102,11 +101,18 @@ const MyCalendar = ({
 
   const handleMuscleGroupClick = async (muscle) => {
     setSelectedMuscle(muscle);
-    const exercisesData = await fetchData(exerciseUrl, exerciseOptions);
-    const filteredExercises = exercisesData.filter((item) =>
-      item.Muscles.toLowerCase().includes(muscle.toLowerCase()),
-    );
-    setExercises(filteredExercises);
+    let offset = 0; // Offset to track where last request left off
+    let exercisesData = []; // Array of exercises retrieved from request
+    
+    // Make two requests to get a total of 20 exercises
+    // Appends responses to exercisesData array
+    for (let i = 0; i < 2; i++) {
+      const response = await fetchData(
+        `${exerciseUrl}/target/${muscle}?offset=${offset}`);
+      exercisesData = exercisesData.concat(response || []);
+      offset += 10;
+    }
+    setExercises(exercisesData);
   };
 
   const handleAddToWorkoutPlan = (exercise) => {
@@ -204,7 +210,9 @@ const MyCalendar = ({
           }}
         >
           <Typography>
-            {exercise.WorkOut} - {exercise.Muscles}
+            {exercise.name} - {[exercise.target, ...(exercise.secondaryMuscles ?? [])].join(
+                    ", ",
+                  )}
           </Typography>
           <Button
             variant="contained"

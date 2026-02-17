@@ -10,13 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import { exerciseOptions, exerciseUrl, fetchData } from "../utils/fetchData";
+import { muscleGroups } from "../constants/muscleGroups";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 
-export const muscleGroups = await fetchData(
-  `${exerciseUrl}/targetList`,
-  exerciseOptions,
-);
 const levelGroups = ["beginner", "intermediate", "advanced"];
 
 // Function to calculate points based on level
@@ -55,10 +52,8 @@ const SearchExcercises = ({
       // Appends responses to exercisesData array
       for (let i = 0; i < 2; i++) {
         const response = await fetchData(
-          `${exerciseUrl}/target/${selectedMuscle}?offset=${offset}`,
-          exerciseOptions,
-        );
-        exercisesData = exercisesData.concat(response);
+          `${exerciseUrl}/target/${selectedMuscle}?offset=${offset}`);
+        exercisesData = exercisesData.concat(response || []);
         offset += 10;
       }
 
@@ -83,10 +78,8 @@ const SearchExcercises = ({
     // Make two requests to get a total of 40 exercises
     // Appends responses to exercisesData array
     for (let i = 0; i < 4; i++) {
-      const response = await fetchData(`${exerciseUrl}?offset=${offset}`,
-        exerciseOptions,
-      );
-      exercisesData = exercisesData.concat(response);
+      const response = await fetchData(`${exerciseUrl}?offset=${offset}`);
+      exercisesData = exercisesData.concat(response || []);
       offset += 10;
     }
     const filteredByLevel = exercisesData.filter((item) =>
@@ -116,10 +109,8 @@ const SearchExcercises = ({
     // Appends responses to exercisesData array
     for (let i = 0; i < 2; i++) {
       const response = await fetchData(
-        `${exerciseUrl}/target/${selectedMuscle}?offset=${offset}`,
-        exerciseOptions,
-      );
-      exercisesData = exercisesData.concat(response);
+        `${exerciseUrl}/target/${muscle}?offset=${offset}`);
+      exercisesData = exercisesData.concat(response || []);
       offset += 10;
     }
     setExcercises(exercisesData);
@@ -128,10 +119,7 @@ const SearchExcercises = ({
   const handleSearch = async () => {
     if (search) {
       // Searches based on names that have the keyword
-      const exercisesData = await fetchData(
-        `${exerciseUrl}/name/${search}`,
-        exerciseOptions,
-      );
+      const exercisesData = await fetchData(`${exerciseUrl}/name/${search}`);
       let searchedExercises = exercisesData;
 
       if (selectedMuscle && selectedLevel) {
