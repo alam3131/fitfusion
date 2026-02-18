@@ -29,11 +29,26 @@ exports.handler = async (event) => {
       },
     });
 
-    const data = await response.json();
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    };
+    const imageBase = "https://exercisedb.p.rapidapi.com/image";
+    if (targetUrl.startsWith(imageBase)) {
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      return {
+        statusCode: 200,
+        headers: {
+          "Content-Type": response.headers.get("content-type"),
+        },
+        body: buffer.toString("base64"),
+        isBase64Encoded: true,
+      };
+    } else {
+      const data = await response.json();
+      return {
+        statusCode: 200,
+        body: JSON.stringify(data),
+      };
+    }
   } catch (error) {
     return {
       statusCode: 500,

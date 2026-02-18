@@ -17,11 +17,6 @@ export const exerciseOptions = {
 //     console.error(error);
 //   }
 // };
-export const getMuscleGroups = async () => {
-  const data = await fetchData(`${exerciseUrl}/targetList`);
-  return data || [];
-};
-
 export const exerciseUrl = "https://exercisedb.p.rapidapi.com/exercises";
 
 export const fetchData = async (url) => {
@@ -29,8 +24,8 @@ export const fetchData = async (url) => {
     // Call your serverless function
     const response = await fetch(`/.netlify/functions/rapid-proxy?targetUrl=${encodeURIComponent(url)}`);
     const result = await response.json();
-
     return result;
+
   } catch (error) {
     console.error(error);
   }

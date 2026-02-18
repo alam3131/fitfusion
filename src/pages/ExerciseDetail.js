@@ -57,7 +57,8 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
     let imageUrl;
     const fetchExcerciseData = async () => {
       try {
-        const response = await fetch(`https://exercisedb.p.rapidapi.com/image?resolution=1080&exerciseId=${exercise.id}`, exerciseOptions);
+        const url = `https://exercisedb.p.rapidapi.com/image?resolution=1080&exerciseId=${exercise.id}`;
+        const response = await fetch(`/.netlify/functions/rapid-proxy?targetUrl=${encodeURIComponent(url)}`);
         const blob = await response.blob();
         imageUrl = URL.createObjectURL(blob);
         setExcerciseImage(imageUrl);

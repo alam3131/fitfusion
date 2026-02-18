@@ -79,6 +79,7 @@ const SearchExcercises = ({
     // Appends responses to exercisesData array
     for (let i = 0; i < 4; i++) {
       const response = await fetchData(`${exerciseUrl}?offset=${offset}`);
+      console.log(response);
       exercisesData = exercisesData.concat(response || []);
       offset += 10;
     }
