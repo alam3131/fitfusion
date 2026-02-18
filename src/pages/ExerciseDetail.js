@@ -100,9 +100,15 @@ const ExcerciseDetail = ({setWorkoutsToCalender, workoutsToCalender, tentativePo
         </div>
         <Stack gap="30px">
           <Box>
-          <Typography sx={{ fontSize: { lg: '20px', xs: '30px' } }} fontWeight={600}>Description:</Typography>
+          <Typography sx={{ fontSize: { lg: '20px', xs: '30px' } }} fontWeight={600}>Instructions:</Typography>
           <Typography sx={{ fontSize: { lg: '20px', xs: '18px' } , width: '650px' }} color="#4F4C4C" >
-            <div><p> {exercise['Long Explanation']} </p></div>
+            <ol style={{ paddingLeft: "24px", marginTop: "8px" }}>
+              {exercise.instructions?.map((step, index) => (
+                <li key={index} style={{ marginBottom: "8px" }}>
+                  {step}
+                </li>
+              ))}
+            </ol>
           </Typography>
           </Box>
           <Stack direction="row" gap="5px" alignItems="center" >
